@@ -20,10 +20,13 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
+    "watch:css": "postcss src/postcss/tailwind.css -o src/styles/index.css -w",
+    "start-css": "npm-run-all -p watch:css start-js",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:styles": "postcss src/postcss/tailwind.css -o src/styles/index.css",
+    "prebuild": "npm run build:styles"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,5 +42,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^7.1.1",
+    "postcss-import": "^12.0.1",
+    "postcss-nested": "^4.2.3"
   }
 }
