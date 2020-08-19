@@ -21,7 +21,6 @@
   },
   "scripts": {
     "watch:css": "postcss src/postcss/tailwind.css -o src/styles/index.css -w",
-    "start-css": "npm-run-all -p watch:css start-js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",

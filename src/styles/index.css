@@ -1752,7 +1752,9 @@ video {
 }
 
 .appearance-none {
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
 .bg-fixed {
@@ -11644,19 +11646,23 @@ video {
 }
 
 .select-none {
-  user-select: none;
+  -webkit-user-select: none;
+          user-select: none;
 }
 
 .select-text {
-  user-select: text;
+  -webkit-user-select: text;
+          user-select: text;
 }
 
 .select-all {
-  user-select: all;
+  -webkit-user-select: all;
+          user-select: all;
 }
 
 .select-auto {
-  user-select: auto;
+  -webkit-user-select: auto;
+          user-select: auto;
 }
 
 .align-baseline {
@@ -15612,7 +15618,9 @@ video {
   }
 
   .sm\:appearance-none {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
   }
 
   .sm\:bg-fixed {
@@ -25504,19 +25512,23 @@ video {
   }
 
   .sm\:select-none {
-    user-select: none;
+    -webkit-user-select: none;
+            user-select: none;
   }
 
   .sm\:select-text {
-    user-select: text;
+    -webkit-user-select: text;
+            user-select: text;
   }
 
   .sm\:select-all {
-    user-select: all;
+    -webkit-user-select: all;
+            user-select: all;
   }
 
   .sm\:select-auto {
-    user-select: auto;
+    -webkit-user-select: auto;
+            user-select: auto;
   }
 
   .sm\:align-baseline {
@@ -29429,7 +29441,9 @@ video {
   }
 
   .md\:appearance-none {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
   }
 
   .md\:bg-fixed {
@@ -39321,19 +39335,23 @@ video {
   }
 
   .md\:select-none {
-    user-select: none;
+    -webkit-user-select: none;
+            user-select: none;
   }
 
   .md\:select-text {
-    user-select: text;
+    -webkit-user-select: text;
+            user-select: text;
   }
 
   .md\:select-all {
-    user-select: all;
+    -webkit-user-select: all;
+            user-select: all;
   }
 
   .md\:select-auto {
-    user-select: auto;
+    -webkit-user-select: auto;
+            user-select: auto;
   }
 
   .md\:align-baseline {
@@ -43246,7 +43264,9 @@ video {
   }
 
   .lg\:appearance-none {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
   }
 
   .lg\:bg-fixed {
@@ -53138,19 +53158,23 @@ video {
   }
 
   .lg\:select-none {
-    user-select: none;
+    -webkit-user-select: none;
+            user-select: none;
   }
 
   .lg\:select-text {
-    user-select: text;
+    -webkit-user-select: text;
+            user-select: text;
   }
 
   .lg\:select-all {
-    user-select: all;
+    -webkit-user-select: all;
+            user-select: all;
   }
 
   .lg\:select-auto {
-    user-select: auto;
+    -webkit-user-select: auto;
+            user-select: auto;
   }
 
   .lg\:align-baseline {
@@ -57063,7 +57087,9 @@ video {
   }
 
   .xl\:appearance-none {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
   }
 
   .xl\:bg-fixed {
@@ -66955,19 +66981,23 @@ video {
   }
 
   .xl\:select-none {
-    user-select: none;
+    -webkit-user-select: none;
+            user-select: none;
   }
 
   .xl\:select-text {
-    user-select: text;
+    -webkit-user-select: text;
+            user-select: text;
   }
 
   .xl\:select-all {
-    user-select: all;
+    -webkit-user-select: all;
+            user-select: all;
   }
 
   .xl\:select-auto {
-    user-select: auto;
+    -webkit-user-select: auto;
+            user-select: auto;
   }
 
   .xl\:align-baseline {
