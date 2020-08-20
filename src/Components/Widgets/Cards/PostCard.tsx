@@ -3,6 +3,7 @@ import React from "react";
 export interface CardProps {
   title: string;
   subtitle: string;
+  image?: string;
 }
 
 export class PostCard extends React.Component<CardProps> {
@@ -14,13 +15,31 @@ export class PostCard extends React.Component<CardProps> {
 
   render() {
     return (
-      <div className="max-w-xs sm:max-w-md md:max-w-xl m-4  flex-col overflow-hidden p-4 bg-white rounded-lg shadow-xl">
-        <h4 className="text-xl text-gray-900 leading-tight text-center ">
-          {this.props.title}
-        </h4>
-        <p className="text-base text-gray-600 leading-normal pt-2 text-justify">
-          {this.props.subtitle}
-        </p>
+      <div className="max-w-sm rounded overflow-hidden shadow-lg m-5">
+        <img
+          className="w-full"
+          src={this.props.image}
+          alt="Sunset in the mountains"
+        />
+        <div className="px-6 py-4">
+          <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
+          <p className="text-gray-700 text-base">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Voluptatibus quia, nulla! Maiores et perferendis eaque,
+            exercitationem praesentium nihil.
+          </p>
+        </div>
+        <div className="px-6 pt-4 pb-2">
+          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            #photography
+          </span>
+          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            #travel
+          </span>
+          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            #winter
+          </span>
+        </div>
       </div>
     );
   }

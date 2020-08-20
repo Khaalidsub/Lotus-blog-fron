@@ -4,37 +4,26 @@ export interface CardProps {
   image: string;
   title: string;
   subtitle: string;
+  info?: string;
 }
 
 export class PostImageCard extends React.Component<CardProps> {
-  state = {
-    date: Date(),
-  };
-  // componentDidMount() {
-  //   this.setState({
-  //     date: Date.now(),
-  //   });
-  // }
   render() {
     return (
-      <div className="max-w-xs sm:max-w-md md:max-w-xl m-5  flex  p-4  bg-white rounded-lg shadow-xl overflow-hidden">
-        <div className="flex-shrink-0 my-auto">
-          <img
-            className="h-24 w-24 rounded"
-            src={this.props.image}
-            alt="post"
-          />
-        </div>
-        <div className="ml-6 pt-1">
-          <h4 className="text-xl text-gray-900 leading-tight">
-            {this.props.title}
-          </h4>
-          <p className="text-base text-gray-600 leading-normal pt-2 ">
-            {this.props.subtitle}
-          </p>
-          <p className="text-xs text-gray-600 leading-normal pt-2 ">
-            {this.state.date}
-          </p>
+      <div className="max-w-sm  rounded lg:max-w-full lg:flex m-5">
+        <div
+          className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+          style={{ backgroundImage: `url(${this.props.image})` }}
+        ></div>
+        <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+          <h4 className="text-gray-700">{this.props.info}</h4>
+          <div className="mb-8">
+            <div className="text-gray-900 font-bold text-xl mb-2">
+              {this.props.title}
+            </div>
+            <p className="text-gray-700 text-base">{this.props.subtitle}</p>
+          </div>
+          {this.props.children}
         </div>
       </div>
     );
