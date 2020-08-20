@@ -17,8 +17,8 @@ export class PostImageCard extends React.Component<CardProps> {
   // }
   render() {
     return (
-      <div className="max-w-md  flex p-4  bg-white rounded-lg shadow-xl overflow-hidden">
-        <div className="flex-shrink-0 ">
+      <div className="max-w-xs sm:max-w-md md:max-w-xl m-5  flex  p-4  bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="flex-shrink-0 my-auto">
           <img
             className="h-24 w-24 rounded"
             src={this.props.image}
@@ -29,7 +29,7 @@ export class PostImageCard extends React.Component<CardProps> {
           <h4 className="text-xl text-gray-900 leading-tight">
             {this.props.title}
           </h4>
-          <p className="text-base text-gray-600 leading-normal pt-2">
+          <p className="text-base text-gray-600 leading-normal pt-2 ">
             {this.props.subtitle}
           </p>
           <p className="text-xs text-gray-600 leading-normal pt-2 ">
