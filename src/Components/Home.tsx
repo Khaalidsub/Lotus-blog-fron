@@ -85,7 +85,7 @@ class Home extends React.Component {
             <PaginationButtons />
           </div>
           <div className="mx-auto lg:my-auto sticky">
-            <h4 className="text-3xl italic text-center mb-16 mt-10 lg:mt-0">
+            <h4 className="text-3xl italic text-tertiary text-center mb-16 mt-10 lg:mt-0">
               Feautured Posts
             </h4>
 
@@ -93,17 +93,25 @@ class Home extends React.Component {
               subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
               title="Post title"
               image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
-            />
+            >
+              <CategoryCard category="programming" />
+            </PostCard>
             <PostCard
               subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
               title="Post title"
               image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
-            />
+            >
+              <CategoryCard category="programming" />
+              <CategoryCard category="programming" />
+              <CategoryCard category="programming" />
+            </PostCard>
             <PostCard
               subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
               title="Post title"
               image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
-            />
+            >
+              <CategoryCard category="programming" />
+            </PostCard>
           </div>
         </div>
       </div>

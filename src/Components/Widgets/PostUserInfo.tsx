@@ -12,7 +12,7 @@ export const PostUserInfo: React.SFC<PostUserInfoProps> = (props) => {
         alt="Avatar of Jonathan Reinink"
       />
       <div className="text-sm">
-        <p className="text-gray-900 leading-none">Jonathan Reinink</p>
+        <p className="text-tertiary leading-none">Jonathan Reinink</p>
         <p className="text-gray-600">Aug 18</p>
       </div>
     </div>

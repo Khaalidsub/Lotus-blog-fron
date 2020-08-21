@@ -5,6 +5,34 @@ module.exports = {
   important: false,
   separator: ":",
   theme: {
+    extend: {
+      colors: {
+        primary: {
+          default: "var(--color-primary)",
+        },
+        secondary: {
+          default: "var(--color-secondary)",
+        },
+        tertiary: {
+          default: "var(--color-tertiary)",
+        },
+        info: {
+          default: "var(--color-info)",
+        },
+        warning: {
+          default: "var(--color-warning)",
+        },
+        negative: {
+          default: "var(--color-negative)",
+        },
+        positive: {
+          default: "var(--color-positive)",
+        },
+        "primary-background": "var(--background-primary)",
+
+        "secondary-background": "var(--background-sec)",
+      },
+    },
     screens: {
       sm: "640px",
       md: "768px",
