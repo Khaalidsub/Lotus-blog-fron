@@ -4,6 +4,7 @@ import Footer from "./Components/Footer";
 import Home from "./Components/Home";
 import { DEFAULT_THEME } from "./themes";
 import { applyTheme } from "./utils/theme";
+import { setlocalStorage, getlocalStorage } from "./utils/localStorage";
 export interface AppProps {}
 
 export interface AppState {}
@@ -12,13 +13,17 @@ class App extends React.Component<AppProps, AppState> {
   state = {
     theme: DEFAULT_THEME,
   };
-  componentDidMount() {
+  async componentDidMount() {
+    const value = await getlocalStorage("theme");
+    if (value) this.setState({ theme: value });
     applyTheme(this.state.theme);
   }
-  setTheme(theme: string) {
+  async setTheme(theme: string) {
     this.setState({ theme: theme });
     applyTheme(theme);
+    await setlocalStorage("theme", theme);
   }
+  // setDefaultTheme
   render() {
     return (
       <div>
