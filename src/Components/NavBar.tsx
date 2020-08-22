@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./Widgets/Buttons/Button";
 
 export interface NavBarProps {}
 
@@ -35,12 +36,7 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
             </a>
           </div>
           <div>
-            <a
-              href="#"
-              className="inline-block text-sm px-4 py-2 leading-none border rounded text-primary border-secondary hover:border-transparent hover:text-white hover:bg-primary mt-4 lg:mt-0"
-            >
-              SignUp
-            </a>
+            <Button label="SignUp" />
           </div>
         </div>
       </nav>

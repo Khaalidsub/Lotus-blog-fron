@@ -1,10 +1,11 @@
 import React from "react";
 import { NavBar } from "./Components/NavBar";
 import Footer from "./Components/Footer";
-import Home from "./Components/Home";
+import Home from "./Components/Routes/Home";
 import { DEFAULT_THEME } from "./themes";
 import { applyTheme } from "./utils/theme";
 import { setlocalStorage, getlocalStorage } from "./utils/localStorage";
+import Profile from "./Components/Routes/Profile";
 export interface AppProps {}
 
 export interface AppState {}
@@ -46,11 +47,11 @@ class App extends React.Component<AppProps, AppState> {
             )}
           </div>
         </div>
-        <div className="sticky top-0 z-10 bg-secondary-background">
+        <div className="sticky top-0 z-50 bg-secondary-background">
           <NavBar />
         </div>
 
-        <Home />
+        <Profile />
 
         <Footer />
       </div>

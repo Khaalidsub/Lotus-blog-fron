@@ -1,11 +1,11 @@
 import React from "react";
-import { PostImageCard } from "./Widgets/Cards/PostImageCard";
-import { PostCard } from "./Widgets/Cards/PostCard";
-import { ImageCard } from "./Widgets/Cards/ImageCard";
-import { PostUserInfo } from "./Widgets/PostUserInfo";
-import { PostDescription } from "./Widgets/Cards/PostDescription";
-import CategoryCard from "./Widgets/Cards/CategoryCard";
-import { PaginationButtons } from "./Widgets/Buttons/PaginationButtons";
+import { PostImageCard } from "../Widgets/Cards/PostImageCard";
+import { PostCard } from "../Widgets/Cards/PostCard";
+import { ImageCard } from "../Widgets/Cards/ImageCard";
+import { PostUserInfo } from "../Widgets/PostUserInfo";
+import { PostDescription } from "../Widgets/Cards/PostDescription";
+import CategoryCard from "../Widgets/Cards/CategoryCard";
+import { PaginationButtons } from "../Widgets/Buttons/PaginationButtons";
 
 class Home extends React.Component {
   render() {
