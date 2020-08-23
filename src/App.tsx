@@ -6,6 +6,7 @@ import { DEFAULT_THEME } from "./themes";
 import { applyTheme } from "./utils/theme";
 import { setlocalStorage, getlocalStorage } from "./utils/localStorage";
 import Profile from "./Components/Routes/Profile";
+import { Posts } from "./Components/Routes/Posts";
 export interface AppProps {}
 
 export interface AppState {}
@@ -51,9 +52,19 @@ class App extends React.Component<AppProps, AppState> {
           <NavBar />
         </div>
 
-        <Profile />
+        <Posts />
 
         <Footer />
+        <div className="md:hidden fixed bottom-0 z-20 right-0 p-5">
+          <div className="   border-4 border-primary  bg-secondary-background p-3 text-secondary rounded-full text-xl  text-center">
+            +
+          </div>
+        </div>
+        <div className="md:block hidden fixed bottom-0 z-20 right-0 p-5">
+          <div className="border-4 border-primary  bg-secondary-background p-4 text-secondary rounded-full text-xl  text-center">
+            Add a new Post
+          </div>
+        </div>
       </div>
     );
   }
