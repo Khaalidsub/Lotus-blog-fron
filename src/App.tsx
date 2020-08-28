@@ -8,6 +8,7 @@ import { setlocalStorage, getlocalStorage } from "./utils/localStorage";
 import Profile from "./Components/Routes/Profile";
 import { Posts } from "./Components/Routes/Posts";
 import { AddPost } from "./Components/Routes/AddPost";
+import { ViewPost } from "./Components/Routes/ViewPost";
 export interface AppProps {}
 
 export interface AppState {}
@@ -53,7 +54,7 @@ class App extends React.Component<AppProps, AppState> {
           <NavBar />
         </div>
 
-        <AddPost />
+        <ViewPost />
 
         <Footer />
         <div className="md:hidden fixed bottom-0 z-20 right-0 p-5">

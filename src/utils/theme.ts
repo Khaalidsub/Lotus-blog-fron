@@ -13,7 +13,7 @@ export interface IMappedTheme {
  */
 export const applyTheme = (theme: string): void => {
   const themeObject: IMappedTheme = mapTheme(themes[theme]);
-  if (themeObject == undefined || null) return;
+  if (themeObject === undefined || null) return;
   const root = document.documentElement;
 
   Object.keys(themeObject).forEach((property) => {

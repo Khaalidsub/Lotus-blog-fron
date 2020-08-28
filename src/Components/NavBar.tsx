@@ -14,7 +14,7 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
   }
   render() {
     return (
-      <nav className="flex items-center justify-between flex-wrap  p-6 border border-solid border-black">
+      <nav className="flex  items-center justify-between flex-wrap  p-6 border border-solid border-black">
         <div className="flex items-center flex-shrink-0 text-primary mr-6">
           <span className="font-semibold text-xl tracking-tight">
             LOTUS BLOGS
@@ -38,7 +38,7 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
 
         <div
           className={` w-full transition  transform ${
-            this.state.collapsed == true
+            this.state.collapsed === true
               ? "block delay-150 duration-300 "
               : "hidden delay-150 duration-300"
           } flex-grow lg:flex lg:items-center lg:w-auto`}

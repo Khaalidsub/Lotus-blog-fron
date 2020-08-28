@@ -11,7 +11,7 @@ const Button: React.SFC<ButtonProps> = (props) => {
   return (
     <button
       className={`inline-block text-sm px-4 py-2 leading-none border rounded text-secondary ${
-        props.type != undefined ? type : ""
+        props.type !== undefined ? type : ""
       }  border-primary hover:border-transparent hover:text-white hover:bg-primary mt-4 lg:mt-0 m-2`}
     >
       {props.label}
