@@ -9,6 +9,8 @@ import Profile from "./Components/Routes/Profile";
 import { Posts } from "./Components/Routes/Posts";
 import { AddPost } from "./Components/Routes/AddPost";
 import { ViewPost } from "./Components/Routes/ViewPost";
+import SignUp from "./Components/Routes/SignUp";
+import SignForm from "./Components/Routes/SignForm";
 export interface AppProps {}
 
 export interface AppState {}
@@ -54,7 +56,7 @@ class App extends React.Component<AppProps, AppState> {
           <NavBar />
         </div>
 
-        <ViewPost />
+        <SignForm />
 
         <Footer />
         <div className="md:hidden fixed bottom-0 z-20 right-0 p-5">

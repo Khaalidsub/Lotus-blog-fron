@@ -64,7 +64,7 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
             </a>
           </div>
           <div>
-            <Button label="SignUp" />
+            <Button label="SignUp/In" />
           </div>
         </div>
       </nav>
