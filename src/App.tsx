@@ -11,6 +11,7 @@ import { AddPost } from "./Components/Routes/AddPost";
 import { ViewPost } from "./Components/Routes/ViewPost";
 import SignUp from "./Components/Routes/SignUp";
 import SignForm from "./Components/Routes/SignForm";
+import EditProfile from "./Components/Routes/EditProfile";
 export interface AppProps {}
 
 export interface AppState {}
@@ -56,7 +57,7 @@ class App extends React.Component<AppProps, AppState> {
           <NavBar />
         </div>
 
-        <SignForm />
+        <EditProfile />
 
         <Footer />
         <div className="md:hidden fixed bottom-0 z-20 right-0 p-5">

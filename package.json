@@ -30,6 +30,7 @@
     "@types/react-redux": "^7.1.9",
     "axios": "^0.20.0",
     "editorjs-react-renderer": "^2.3.6",
+    "framer-motion": "^2.6.5",
     "lodash": "^4.17.20",
     "moment": "^2.27.0",
     "prop-types": "^15.7.2",

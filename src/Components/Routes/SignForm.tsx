@@ -12,17 +12,17 @@ class SignForm extends React.Component<SignFormProps, SignFormState> {
     const typeForm = this.state.type === "Register" ? <SignUp /> : <SignIn />;
     return (
       <div>
-        <div className=" h-8 mx-auto mt-12 max-w-xs text-center grid grid-cols-2 bg-gray-200 rounded-full border border-primary">
+        <div className=" h-8 mx-auto mt-12 max-w-xs text-center grid grid-cols-2 bg-secondary-background rounded-full border border-primary">
           <button
             onClick={() => this.setState({ type: "Register" })}
-            className="my-auto border-r focus:shadow-inner rounded-full cursor-pointer focus:outline-none text-primary"
+            className="my-auto border-r  focus:text-secondary focus:shadow-inner rounded-full cursor-pointer focus:outline-none text-primary"
           >
             Sign Up
           </button>
 
           <button
             onClick={() => this.setState({ type: "Login" })}
-            className="my-auto border-l   focus:shadow-inner rounded-full cursor-pointer  focus:outline-none text-primary"
+            className="my-auto border-l focus:text-secondary   focus:shadow-inner rounded-full cursor-pointer  focus:outline-none text-primary"
           >
             Sign In
           </button>
