@@ -1,7 +1,7 @@
 import React from "react";
 import InputField from "../Widgets/InputField";
 import SubmitButton from "../Widgets/Buttons/SubmitButton";
-import { Control, Form, actions } from "react-redux-form";
+import { Form } from "react-redux-form";
 export interface SignUpProps {}
 
 export interface SignUpState {}

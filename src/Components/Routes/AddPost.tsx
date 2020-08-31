@@ -9,7 +9,7 @@ export interface AddPostState {}
 
 export class AddPost extends React.Component<AddPostProps, AddPostState> {
   componentDidMount() {
-    const editor = new EditorJS(editorjsConfig);
+    new EditorJS(editorjsConfig);
   }
   render() {
     return (

@@ -1,5 +1,4 @@
 import { dataTypes } from "../types";
-import { PostAction } from "../interface";
 
 export const initialData = {
   modelData: {

@@ -1,11 +1,12 @@
 import React from "react";
-import { Control, Form, actions } from "react-redux-form";
+import { Control, Errors } from "react-redux-form";
 export interface InputFieldProps {
   label: string;
   type: string;
   value?: string;
   model: string;
-  error?: string;
+  error?: {};
+  validators?: {};
 }
 
 const InputField: React.SFC<InputFieldProps> = (props) => {
@@ -21,13 +22,19 @@ const InputField: React.SFC<InputFieldProps> = (props) => {
       </div>
       <div className="md:w-2/3">
         <Control.text
+          validators={props.validators}
           model={props.model}
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
           id="inline-full-name"
           type={props.type}
           value={props.value}
         />
-        <p className="text-negative text-xs italic ">{props.error}</p>
+        <Errors
+          className="text-negative text-xs italic"
+          model={props.model}
+          show="touched"
+          messages={props.error}
+        />
       </div>
     </div>
   );

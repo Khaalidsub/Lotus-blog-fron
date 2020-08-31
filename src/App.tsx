@@ -8,11 +8,11 @@ import Profile from "./Components/Routes/Profile";
 import { Posts } from "./Components/Routes/Posts";
 import { AddPost } from "./Components/Routes/AddPost";
 import { ViewPost } from "./Components/Routes/ViewPost";
-import SignUp from "./Components/Routes/SignUp";
+
 import SignForm from "./Components/Routes/SignForm";
 import EditProfile from "./Components/Routes/EditProfile";
 import Header from "./Components/Header";
-import { Post } from "./models/Post";
+
 export interface AppProps {}
 
 export interface AppState {}

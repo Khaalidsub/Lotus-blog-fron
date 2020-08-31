@@ -16,6 +16,8 @@ export const addUser = (user: UserAction) => async () => {
 };
 export const signIn = (user: Credential) => async () => {
   try {
+    console.log("in signing action", user);
+
     await lotusApi.post("/login", user);
     return getUserSession();
   } catch (error) {
@@ -36,7 +38,7 @@ export const getUserSession = () => async (dispatch: Dispatch) => {
 };
 export const logout = () => async (dispatch: Dispatch) => {
   try {
-    const response = await lotusApi.get("/logout");
+    await lotusApi.get("/logout");
     dispatch(loggingOut());
   } catch (error) {
     console.log(error);

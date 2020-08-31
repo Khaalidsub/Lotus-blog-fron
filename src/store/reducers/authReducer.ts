@@ -1,7 +1,6 @@
-import { AuthActions, collection, data } from "../types";
-import { Action, UserAction, AuthAction, AuthReducer } from "../interface";
+import { AuthActions } from "../types";
+import { AuthAction, AuthReducer } from "../interface";
 import { initialData } from "./initialData";
-import { Reducer } from "react";
 
 export default (storeData: AuthReducer, action: AuthAction): any => {
   switch (action.type) {

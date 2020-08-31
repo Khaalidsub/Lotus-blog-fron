@@ -1,7 +1,7 @@
 import React from "react";
 import InputField from "./InputField";
 import SubmitButton from "./Buttons/SubmitButton";
-import { Control, Form, actions } from "react-redux-form";
+import { Form } from "react-redux-form";
 export interface EditUserProps {}
 
 export interface EditUserState {}

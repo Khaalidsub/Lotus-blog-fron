@@ -1,5 +1,5 @@
 import { Action } from "../interface";
-import { data, collection } from "../types";
+import { collection } from "../types";
 import { initialData } from "./initialData";
 
 export default (storeData: collection = [], action: Action): any => {
