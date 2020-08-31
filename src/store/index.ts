@@ -1,1 +1,3 @@
-export const value = "";
+import reducers from "./reducers";
+
+export { reducers };

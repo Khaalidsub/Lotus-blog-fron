@@ -16,6 +16,7 @@ export enum AuthActions {
   login = "LOGIN", //login
   session = "SESSION", //fetch if there is any session
   logout = "LOGOUT", //logout
+  signUp = "REGISTER",
 }
 
 export enum dataTypes {
@@ -34,3 +35,5 @@ export type collection =
   | CategoryAction[]
   | CredentialAction[]
   | UserAction[];
+
+export type auth = Credential | PostAction;

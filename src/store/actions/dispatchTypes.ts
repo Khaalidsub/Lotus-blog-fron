@@ -35,14 +35,20 @@ export const adding = (data: data, dataType: dataTypes): Action => ({
 });
 
 //auth
-export const logout = (data: number, dataType: dataTypes): Action => ({
-  type: AuthActions.logout,
-  dataType: dataType,
+export const registering = (data: data): Action => ({
+  type: AuthActions.signUp,
+  dataType: dataTypes.user,
   payload: data,
 });
-export const authenticating = (data: any, dataType: dataTypes): Action => ({
+
+export const loggingOut = (): Action => ({
+  type: AuthActions.logout,
+  dataType: dataTypes.user,
+  payload: null,
+});
+export const authenticating = (data: data): Action => ({
   type: AuthActions.session,
-  dataType: dataType,
+  dataType: dataTypes.user,
   payload: data,
 });
 export const logging = (data: data, dataType: dataTypes): Action => ({
