@@ -35,11 +35,11 @@ export const adding = (data: data, dataType: dataTypes): Action => ({
 });
 
 //auth
-export const registering = (data: data): Action => ({
-  type: AuthActions.signUp,
-  dataType: dataTypes.user,
-  payload: data,
-});
+// export const registering = (data: data): Action => ({
+//   type: AuthActions.signUp,
+//   dataType: dataTypes.user,
+//   payload: data,
+// });
 
 export const loggingOut = (): Action => ({
   type: AuthActions.logout,
@@ -51,8 +51,8 @@ export const authenticating = (data: data): Action => ({
   dataType: dataTypes.user,
   payload: data,
 });
-export const logging = (data: data, dataType: dataTypes): Action => ({
-  type: AuthActions.login,
-  dataType: dataType,
-  payload: data,
-});
+// export const logging = (data: data, dataType: dataTypes): Action => ({
+//   type: AuthActions.login,
+//   dataType: dataType,
+//   payload: data,
+// });

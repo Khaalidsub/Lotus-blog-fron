@@ -1,7 +1,7 @@
 import React from "react";
 import InputField from "./InputField";
 import SubmitButton from "./Buttons/SubmitButton";
-
+import { Control, Form, actions } from "react-redux-form";
 export interface EditUserProps {}
 
 export interface EditUserState {}
@@ -10,12 +10,12 @@ class EditUser extends React.Component<EditUserProps, EditUserState> {
   // state = { :  }
   render() {
     return (
-      <form className="">
-        <InputField label="Full Name" type="name" />
-        <InputField label="Email" type="email" />
+      <Form model="userEdit" className="">
+        <InputField model="userEdit.name" label="Full Name" type="name" />
+        <InputField model="userEdit.email" label="Email" type="email" />
 
         <SubmitButton label="Edit Profile" />
-      </form>
+      </Form>
     );
   }
 }

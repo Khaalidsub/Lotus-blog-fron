@@ -1,28 +1,23 @@
 import { Dispatch } from "redux";
 import lotusApi from "../../api";
-import {
-  registering,
-  logging,
-  authenticating,
-  loggingOut,
-} from "./dispatchTypes";
+import { authenticating, loggingOut } from "./dispatchTypes";
 import { UserAction } from "../interface";
-import { dataTypes } from "../types";
 
-export const addUser = (user: UserAction) => async (dispatch: Dispatch) => {
+export const addUser = (user: UserAction) => async () => {
   try {
-    const response = await lotusApi.post("/signUp", user);
-    dispatch(registering(response.data));
+    await lotusApi.post("/signUp", user);
+    // dispatch(registering(response.data));
+    return getUserSession();
   } catch (error) {
     console.log(error);
 
     return error;
   }
 };
-export const signIn = (user: Credential) => async (dispatch: Dispatch) => {
+export const signIn = (user: Credential) => async () => {
   try {
-    const response = await lotusApi.post("/login", user);
-    dispatch(logging(response.data, dataTypes.user));
+    await lotusApi.post("/login", user);
+    return getUserSession();
   } catch (error) {
     console.log(error);
 
