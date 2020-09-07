@@ -6,14 +6,3 @@ export const minLength = (len: number) => (val) => val.length >= len;
 export const isNumber = (val) => !isNaN(Number(val));
 export const validEmail = (val: string) => regexp.test(val);
 const regexp: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-
-export const postLogin = (values: CredentialAction, submitAction: Function) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(true);
-
-      console.log(values);
-      submitAction(values);
-    });
-  });
-};

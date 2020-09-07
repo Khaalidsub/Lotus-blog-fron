@@ -1,22 +1,20 @@
 import React from "react";
 import InputField from "../Widgets/InputField";
 import SubmitButton from "../Widgets/Buttons/SubmitButton";
-import { Form, actions } from "react-redux-form";
+import { Form } from "react-redux-form";
 import { CredentialAction } from "../../store/interface";
-import {
-  required,
-  validEmail,
-  minLength,
-  postLogin,
-} from "../../utils/validators";
+import { required, validEmail, minLength } from "../../utils/validators";
 import { signIn } from "../../store";
-export interface SignInProps {}
+import { connect } from "react-redux";
+import LoadingAnimation from "../Widgets/loadingAnimation";
 
-export interface SignInState {}
-
-class SignIn extends React.Component<SignInProps, SignInState> {
-  handleSubmit(user: CredentialAction) {
-    actions.submit("userLogin", postLogin(user, signIn));
+class _SignIn extends React.Component<any, any> {
+  state = { loading: false };
+  async handleSubmit(user: CredentialAction) {
+    console.log(this.props);
+    this.setState({ loading: true });
+    await this.props.signIn(user);
+    this.setState({ loading: false });
   }
   render() {
     return (
@@ -51,10 +49,12 @@ class SignIn extends React.Component<SignInProps, SignInState> {
             minLength: "Password Must be more than 6",
           }}
         />
-        <SubmitButton label="Sign In" />
+
+        <SubmitButton loading={this.state.loading} label="Sign In" />
+        <LoadingAnimation loading={this.state.loading} />
       </Form>
     );
   }
 }
 
-export default SignIn;
+export default connect(null, { signIn })(_SignIn);

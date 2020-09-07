@@ -1,10 +1,11 @@
 import React from "react";
 export interface SubmitButtonProps {
   label: string;
+  loading?: boolean;
 }
 
 const SubmitButton: React.SFC<SubmitButtonProps> = (props) => {
-  return (
+  return !props.loading ? (
     <div className="md:flex md:items-center">
       <div className="md:w-1/3"></div>
       <div className="md:w-2/3">
@@ -16,6 +17,8 @@ const SubmitButton: React.SFC<SubmitButtonProps> = (props) => {
         </button>
       </div>
     </div>
+  ) : (
+    <div></div>
   );
 };
 

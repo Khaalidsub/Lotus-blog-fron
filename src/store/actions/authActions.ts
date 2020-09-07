@@ -1,25 +1,32 @@
-import { Dispatch } from "redux";
+import { Dispatch, AnyAction } from "redux";
 import lotusApi from "../../api";
 import { authenticating, loggingOut } from "./dispatchTypes";
 import { UserAction } from "../interface";
+import { ThunkDispatch } from "redux-thunk";
 
-export const addUser = (user: UserAction) => async () => {
+export const addUser = (user: UserAction) => async (
+  dispatch: ThunkDispatch<{}, {}, AnyAction>
+) => {
   try {
-    await lotusApi.post("/signUp", user);
+    await lotusApi.post("/signup", user);
     // dispatch(registering(response.data));
-    return getUserSession();
+    dispatch(getUserSession());
   } catch (error) {
     console.log(error);
 
     return error;
   }
 };
-export const signIn = (user: Credential) => async () => {
+export const signIn = (user: Credential) => async (
+  dispatch: ThunkDispatch<{}, {}, AnyAction>
+) => {
   try {
     console.log("in signing action", user);
 
-    await lotusApi.post("/login", user);
-    return getUserSession();
+    const response = await lotusApi.post("/login", user);
+    console.log("in login", response, response.config.jar);
+
+    dispatch(getUserSession());
   } catch (error) {
     console.log(error);
 
@@ -28,7 +35,9 @@ export const signIn = (user: Credential) => async () => {
 };
 export const getUserSession = () => async (dispatch: Dispatch) => {
   try {
-    const response = await lotusApi.get("/");
+    const response = await lotusApi.get("/session");
+    console.log("response session", response, response.config.jar);
+
     dispatch(authenticating(response.data));
   } catch (error) {
     console.log(error);

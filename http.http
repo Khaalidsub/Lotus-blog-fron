@@ -1,0 +1,3 @@
+@baseURL = http://157.245.57.136:8081/blog
+
+GET {{baseURL}}/posts/
