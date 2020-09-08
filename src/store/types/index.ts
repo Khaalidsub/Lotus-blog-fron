@@ -24,6 +24,10 @@ export enum dataTypes {
   category = "CATEGORY",
   user = "USER",
 }
+// export const post = "POST";
+// export const category = "CATEGORY";
+// export const user = "USER";
+
 export type data =
   | PostAction
   | CategoryAction

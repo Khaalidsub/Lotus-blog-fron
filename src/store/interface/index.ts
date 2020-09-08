@@ -34,7 +34,7 @@ export interface UserAction extends CredentialAction {
 
 export interface AuthReducer {
   isSignedIn: boolean;
-  USER: UserAction;
+  user: UserAction;
 }
 
 // export interface Types {

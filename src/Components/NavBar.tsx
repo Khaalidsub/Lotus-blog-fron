@@ -1,18 +1,33 @@
 import React from "react";
 import Button from "./Widgets/Buttons/Button";
-
-export interface NavBarProps {}
+import { getUserSession } from "../store";
+import { connect } from "react-redux";
+import { UserAction } from "../store/interface";
+export interface NavBarProps {
+  getUserSession: () => Promise<any>;
+  user: UserAction;
+  isSignedIn: boolean;
+}
 
 export interface NavBarState {}
 
-export class NavBar extends React.Component<NavBarProps, NavBarState> {
+class _NavBar extends React.Component<NavBarProps, NavBarState> {
   state = { collapsed: true };
+  componentDidMount() {
+    this.props.getUserSession();
+  }
   setNav() {
     console.log("collapse", this.state);
-
+    // this.props.getUserSession()
     this.setState({ collapsed: !this.state.collapsed });
   }
   render() {
+    const type = this.props.isSignedIn ? (
+      <Button label="Logout" />
+    ) : (
+      <Button label="SignUp/In" />
+    );
+
     return (
       <div className="sticky top-0 z-50 bg-secondary-background">
         <nav className="flex  items-center justify-between flex-wrap  p-6 border border-solid border-black">
@@ -64,12 +79,15 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
                 People
               </a>
             </div>
-            <div>
-              <Button label="SignUp/In" />
-            </div>
+            <div>{type}</div>
           </div>
         </nav>
       </div>
     );
   }
 }
+const mapStateToProps = (state) => ({
+  isSignedIn: state.stateData.isSignedIn,
+  user: state.stateData.USER,
+});
+export default connect(mapStateToProps, { getUserSession })(_NavBar);

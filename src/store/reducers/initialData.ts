@@ -9,10 +9,9 @@ export const initialData = {
   stateData: {
     isSignedIn: false,
     [dataTypes.user]: {
+      id: "",
       name: "",
       email: "",
-
-      password: "",
     },
   },
 };

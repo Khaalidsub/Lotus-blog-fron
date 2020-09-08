@@ -1,4 +1,4 @@
 import reducers from "./reducers";
-import { signIn, addUser } from "./actions";
+import { signIn, addUser, getUserSession } from "./actions";
 
-export { reducers, signIn, addUser };
+export { reducers, signIn, addUser, getUserSession };
