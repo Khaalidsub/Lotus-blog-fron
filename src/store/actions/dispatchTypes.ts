@@ -1,58 +1,48 @@
-import {
-  dataTypes,
-  ModelActions,
-  AuthActions,
-  data,
-  collection,
-} from "../types";
-import { Action } from "../interface";
+import { dataTypes, ModelActions, AuthActions } from "../types";
+import { Action, UserAction, AuthAction } from "../interface";
 
 //model
-export const selecting = (data: data, dataType: dataTypes): Action => ({
+export const selecting = <T>(data: T): Action<T> => ({
   type: ModelActions.select,
-  dataType: dataType,
+  dataType: dataTypes.select,
   payload: data,
 });
-export const fetching = (data: collection, dataType: dataTypes): Action => ({
+
+export const fetching = <T>(
+  data: Array<T>,
+  dataType: dataTypes
+): Action<T> => ({
   type: ModelActions.fetch,
   dataType: dataType,
   payload: data,
 });
-export const deleting = (data: number, dataType: dataTypes): Action => ({
+
+export const deleting = <T>(data: T, dataType: dataTypes): Action<T> => ({
   type: ModelActions.delete,
   dataType: dataType,
   payload: data,
 });
-export const editing = (data: data, dataType: dataTypes): Action => ({
+
+export const editing = <T>(data: T, dataType: dataTypes): Action<T> => ({
   type: ModelActions.edit,
   dataType: dataType,
   payload: data,
 });
-export const adding = (data: data, dataType: dataTypes): Action => ({
+
+export const adding = <T>(data: T, dataType: dataTypes): Action<T> => ({
   type: ModelActions.add,
   dataType: dataType,
   payload: data,
 });
 
-//auth
-// export const registering = (data: data): Action => ({
-//   type: AuthActions.signUp,
-//   dataType: dataTypes.user,
-//   payload: data,
-// });
-
-export const loggingOut = (): Action => ({
+export const loggingOut = (): AuthAction => ({
   type: AuthActions.logout,
   dataType: dataTypes.user,
-  payload: null,
+  payload: { name: "", email: "", password: "", image: "", id: "" },
 });
-export const authenticating = (data: data): Action => ({
+
+export const authenticating = (data: UserAction): AuthAction => ({
   type: AuthActions.session,
   dataType: dataTypes.user,
   payload: data,
 });
-// export const logging = (data: data, dataType: dataTypes): Action => ({
-//   type: AuthActions.login,
-//   dataType: dataType,
-//   payload: data,
-// });

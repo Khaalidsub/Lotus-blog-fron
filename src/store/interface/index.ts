@@ -6,7 +6,10 @@ import {
   collection,
 } from "../types";
 
-export interface PostAction {
+export interface IModel {
+  id?: string;
+}
+export interface PostAction extends IModel {
   id?: string;
   title: string;
   blocks: any;
@@ -16,7 +19,7 @@ export interface PostAction {
   image?: string;
 }
 
-export interface CategoryAction {
+export interface CategoryAction extends IModel {
   id?: string;
   name: string;
 }
@@ -26,7 +29,7 @@ export interface CredentialAction {
   password?: string;
 }
 
-export interface UserAction extends CredentialAction {
+export interface UserAction extends CredentialAction, IModel {
   id?: string;
   name: string;
   image?: string;
@@ -34,16 +37,31 @@ export interface UserAction extends CredentialAction {
 
 export interface AuthReducer {
   isSignedIn: boolean;
-  user: UserAction;
+  [dataTypes.user]: UserAction;
 }
 
+export interface ModelReducer {
+  [dataTypes.post]: PostAction[];
+  [dataTypes.category]: CategoryAction[];
+  [dataTypes.user]: UserAction[];
+  [dataTypes.select]: data;
+}
+
+export interface CombinedReducer {
+  modelData: ModelReducer;
+  stateData: AuthReducer;
+}
 // export interface Types {
 //   type:
 // }
 
-export interface Action {
+interface PayLoad<T> {
+  id: string;
+}
+
+export interface Action<T> {
   dataType: dataTypes;
-  payload: data | collection | null;
+  payload: T | Array<T>;
   type: ModelActions | AuthActions;
 }
 

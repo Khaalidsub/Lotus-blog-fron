@@ -2,10 +2,7 @@ import { AuthActions } from "../types";
 import { AuthAction, AuthReducer } from "../interface";
 import { initialData } from "./initialData";
 
-export default (storeData: AuthReducer, action: AuthAction): any => {
-  // console.table(storeData);
-  // console.log(action);
-
+export default (storeData: AuthReducer, action: AuthAction): AuthReducer => {
   switch (action.type) {
     case AuthActions.login:
       return {

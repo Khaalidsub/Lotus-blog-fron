@@ -23,6 +23,7 @@ export enum dataTypes {
   post = "POST",
   category = "CATEGORY",
   user = "USER",
+  select = "SELECT",
 }
 // export const post = "POST";
 // export const category = "CATEGORY";
@@ -33,7 +34,8 @@ export type data =
   | CategoryAction
   | CredentialAction
   | UserAction
-  | number;
+  | any;
+
 export type collection =
   | PostAction[]
   | CategoryAction[]

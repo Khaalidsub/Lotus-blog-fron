@@ -9,7 +9,8 @@ import {
   initialUserLogin,
   initialUserEdit,
 } from "./formReducer";
-export default combineReducers({
+import { CombinedReducer } from "../interface";
+export default combineReducers<CombinedReducer>({
   modelData: modelReduce,
   stateData: authReducer,
   ...createForms({
