@@ -12,10 +12,11 @@ export interface IModel {
 export interface PostAction extends IModel {
   id?: string;
   title: string;
+  subtitle: string;
   blocks: any;
-  time: number;
-  category?: CategoryAction;
-  user?: UserAction;
+  createdAt: Date;
+  category?: CategoryAction | string;
+  user?: UserAction | string;
   image?: string;
 }
 

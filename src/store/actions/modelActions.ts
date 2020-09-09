@@ -17,6 +17,7 @@ export const addData = <T>(
   try {
     const response = await lotusApi.post(`/${url}`, data);
     // dispatch(registering(response.data));
+
     dispatch(adding<T>(response.data, dataTypes));
   } catch (error) {
     console.log(error);

@@ -1,2 +1,19 @@
 import { addUser, getUserSession, logout, signIn } from "./authActions";
-export { addUser, getUserSession, logout, signIn };
+import {
+  addData,
+  deleteData,
+  fetchCollection,
+  selectData,
+  updateData,
+} from "./modelActions";
+export {
+  addUser,
+  getUserSession,
+  logout,
+  signIn,
+  addData,
+  deleteData,
+  fetchCollection,
+  selectData,
+  updateData,
+};
