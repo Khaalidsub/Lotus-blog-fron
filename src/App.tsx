@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import Home from "./Components/Routes/Home";
@@ -12,33 +12,49 @@ import { ViewPost } from "./Components/Routes/ViewPost";
 import SignForm from "./Components/Routes/SignForm";
 import EditProfile from "./Components/Routes/EditProfile";
 import Header from "./Components/Header";
+import { AuthReducer, CombinedReducer } from "./store/interface";
+import { connect } from "react-redux";
+import ErrorPage from "./Components/Routes/ErrorPage";
 
-export interface AppProps {}
+export interface AppProps {
+  isSignedIn: boolean;
+}
 
 export interface AppState {}
 
-class App extends React.Component<AppProps, AppState> {
+class _App extends React.Component<AppProps, AppState> {
   render() {
     return (
       <div>
         <React.Fragment>
           <Router>
-            <Route path="/" component={Header} />
+            <Route component={Header} />
 
-            <Route path="/" component={NavBar} />
-            <Route path="/" exact component={Home} />
-            <Route path="/blogs/posts" exact component={Posts} />
-            <Route path="/blogs/profile" exact component={Profile} />
-            <Route
-              path="/blogs/profile/settings"
-              exact
-              component={EditProfile}
-            />
-            <Route path="/blogs/posts/view_post" exact component={ViewPost} />
-            <Route path="/blogs/posts/add_post" exact component={AddPost} />
-            <Route path="/sign_form" exact component={SignForm} />
-            <Route path="/" component={Footer} />
-            <Route path="/" component={addButton} />
+            <Route component={NavBar} />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/blogs/posts" exact component={Posts} />
+              {this.props.isSignedIn && (
+                <Route path="/blogs/profile" exact component={Profile} />
+              )}
+              {this.props.isSignedIn && (
+                <Route
+                  path="/blogs/profile/settings"
+                  exact
+                  component={EditProfile}
+                />
+              )}
+              <Route path="/blogs/posts/view_post" exact component={ViewPost} />
+              {this.props.isSignedIn && (
+                <Route path="/blogs/posts/add_post" exact component={AddPost} />
+              )}
+              {!this.props.isSignedIn && (
+                <Route path="/sign_form" exact component={SignForm} />
+              )}
+              {this.props.isSignedIn && <Route component={addButton} />}
+              <Route component={ErrorPage} />
+            </Switch>
+            <Route component={Footer} />
           </Router>
         </React.Fragment>
       </div>
@@ -62,5 +78,7 @@ const addButton = (): JSX.Element => {
     </React.Fragment>
   );
 };
-
-export default App;
+const mapStateToProps = (state: CombinedReducer) => ({
+  isSignedIn: state.stateData.isSignedIn,
+});
+export default connect(mapStateToProps, {})(_App);

@@ -19,6 +19,7 @@ export const addData = <T>(
     // dispatch(registering(response.data));
 
     dispatch(adding<T>(response.data, dataTypes));
+    return true;
   } catch (error) {
     console.log(error);
 

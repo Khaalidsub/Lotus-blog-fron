@@ -14,8 +14,9 @@ import { connect } from "react-redux";
 import { dataTypes, data } from "../../store/types";
 import SubmitButton from "../Widgets/Buttons/SubmitButton";
 import LoadingAnimation from "../Widgets/loadingAnimation";
+import { RouteComponentProps } from "react-router-dom";
 
-export interface AddPostProps {
+export interface AddPostProps extends RouteComponentProps {
   user: UserAction;
   category: CategoryAction[];
   addData: <PostAction>(
@@ -77,7 +78,14 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
       });
       console.log("sending..", this.state.post);
 
-      await this.props.addData(this.state.post, "posts/", dataTypes.post);
+      const response = await this.props.addData(
+        this.state.post,
+        "posts/",
+        dataTypes.post
+      );
+      if (response === true) {
+        this.props.history.replace("/");
+      }
     } else {
       this.setState({
         error: errorMessage,
@@ -86,6 +94,7 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
 
     this.setState({ loading: false });
   };
+
   validateParagraph(data: any) {
     if (!data.text.trim()) {
       return false;
@@ -93,6 +102,8 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     return true;
   }
   render() {
+    // console.log("hello in post", );
+
     return (
       <div className="relative max-w-4xl mt-5 mb-5 pt-10 pb-5 pl-3 pr-3 rounded-lg mx-auto">
         <form
