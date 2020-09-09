@@ -6,8 +6,81 @@ import { PostUserInfo } from "../Widgets/PostUserInfo";
 import { PostDescription } from "../Widgets/Cards/PostDescription";
 import CategoryCard from "../Widgets/Cards/CategoryCard";
 import { PaginationButtons } from "../Widgets/Buttons/PaginationButtons";
+import {
+  PostAction,
+  CombinedReducer,
+  UserAction,
+  CategoryAction,
+} from "../../store/interface";
+import { fetchCollection } from "../../store";
+import { RouteComponentProps } from "react-router-dom";
+import { connect } from "react-redux";
+import { dataTypes } from "../../store/types";
+export interface AddPostProps extends RouteComponentProps {
+  posts: PostAction[];
+  fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
+}
+const post = (post: PostAction): JSX.Element => {
+  return (
+    <PostImageCard
+      image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      subtitle={post.subtitle}
+      title={post.title}
+      info="Latest"
+    >
+      <PostUserInfo
+        user={(post.user as UserAction).name}
+        image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      />
+      <CategoryCard category={(post.category as CategoryAction).name} />
+    </PostImageCard>
+  );
+};
 
-class Home extends React.Component {
+const feauturedPost = (post: PostAction): JSX.Element => {
+  return (
+    <PostCard
+      subtitle={post.subtitle}
+      title={post.title}
+      image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+    >
+      <CategoryCard category={(post.category as CategoryAction).name} />
+    </PostCard>
+  );
+};
+class _Home extends React.Component<AddPostProps> {
+  componentDidMount() {
+    this.props.fetchCollection("posts", dataTypes.post);
+  }
+  renderLatestList(): JSX.Element[] | JSX.Element | undefined {
+    console.log("checking posts:", this.props.posts);
+    if (this.props.posts !== undefined) {
+      this.props.posts.map((post) => {
+        post.title = post.title.replace(/&nbsp;/gi, "");
+        post.subtitle = post.subtitle.replace(/&nbsp;/gi, "");
+        return post;
+      });
+      return this.props.posts.map(post);
+    } else return <div></div>;
+  }
+
+  renderFeatured(): JSX.Element[] | JSX.Element {
+    console.log("checking posts:", this.props.posts);
+    if (this.props.posts !== undefined) {
+      this.props.posts.map((post) => {
+        post.title = post.title.replace(/&nbsp;/gi, "");
+        post.subtitle = post.subtitle.replace(/&nbsp;/gi, "");
+        return post;
+      });
+      let index = 0;
+      return this.props.posts.map((data, i) => {
+        if (i < 3) return feauturedPost(data);
+
+        return <div></div>;
+      }, index++);
+    } else return <div></div>;
+  }
+
   render() {
     return (
       <div className="">
@@ -36,82 +109,22 @@ class Home extends React.Component {
         </div>
         <div className=" grid grid-cols-1 lg:grid-cols-2 mt-10 mb-10">
           <div className="mx-auto">
-            <PaginationButtons />
-            <PostImageCard
-              image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-              info="Latest"
-            >
-              <PostUserInfo image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" />
-            </PostImageCard>
+            {this.props.posts !== undefined && this.props.posts.length > 8 && (
+              <PaginationButtons />
+            )}
 
-            <PostImageCard
-              image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-              info="Latest"
-            >
-              <PostUserInfo image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" />
-            </PostImageCard>
+            {this.renderLatestList()}
 
-            <PostImageCard
-              image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-              info="Latest"
-            >
-              <PostUserInfo image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" />
-            </PostImageCard>
-
-            <PostImageCard
-              image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-              info="Latest"
-            >
-              <PostUserInfo image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" />
-            </PostImageCard>
-
-            <PostImageCard
-              image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-              info="Latest"
-            >
-              <PostUserInfo image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" />
-            </PostImageCard>
-
-            <PaginationButtons />
+            {this.props.posts !== undefined && this.props.posts.length > 8 && (
+              <PaginationButtons />
+            )}
           </div>
           <div className="mx-auto lg:my-auto sticky">
             <h4 className="text-3xl italic text-tertiary text-center mb-16 mt-10 lg:mt-0">
               Feautured Posts
             </h4>
 
-            <PostCard
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-              image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
-            >
-              <CategoryCard category="programming" />
-            </PostCard>
-            <PostCard
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-              image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
-            >
-              <CategoryCard category="programming" />
-              <CategoryCard category="programming" />
-              <CategoryCard category="programming" />
-            </PostCard>
-            <PostCard
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-              image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
-            >
-              <CategoryCard category="programming" />
-            </PostCard>
+            {this.renderFeatured()}
           </div>
         </div>
       </div>
@@ -119,4 +132,7 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state: CombinedReducer) => ({
+  posts: state.modelData.POST,
+});
+export default connect(mapStateToProps, { fetchCollection })(_Home);

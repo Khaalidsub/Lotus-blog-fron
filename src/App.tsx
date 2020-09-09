@@ -12,7 +12,7 @@ import { ViewPost } from "./Components/Routes/ViewPost";
 import SignForm from "./Components/Routes/SignForm";
 import EditProfile from "./Components/Routes/EditProfile";
 import Header from "./Components/Header";
-import { AuthReducer, CombinedReducer } from "./store/interface";
+import { CombinedReducer } from "./store/interface";
 import { connect } from "react-redux";
 import ErrorPage from "./Components/Routes/ErrorPage";
 
@@ -51,9 +51,10 @@ class _App extends React.Component<AppProps, AppState> {
               {!this.props.isSignedIn && (
                 <Route path="/sign_form" exact component={SignForm} />
               )}
-              {this.props.isSignedIn && <Route component={addButton} />}
+
               <Route component={ErrorPage} />
             </Switch>
+            {this.props.isSignedIn && <Route component={addButton} />}
             <Route component={Footer} />
           </Router>
         </React.Fragment>
