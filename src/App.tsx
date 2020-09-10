@@ -5,7 +5,7 @@ import Footer from "./Components/Footer";
 import Home from "./Components/Routes/Home";
 
 import Profile from "./Components/Routes/Profile";
-import { Posts } from "./Components/Routes/Posts";
+import Posts from "./Components/Routes/Posts";
 import AddPost from "./Components/Routes/AddPost";
 import ViewPost from "./Components/Routes/ViewPost";
 
