@@ -44,7 +44,11 @@ class _App extends React.Component<AppProps, AppState> {
                   component={EditProfile}
                 />
               )}
-              <Route path="/blogs/posts/view_post" exact component={ViewPost} />
+              <Route
+                path="/blogs/posts/view_post/:id"
+                exact
+                component={ViewPost}
+              />
               {this.props.isSignedIn && (
                 <Route path="/blogs/posts/add_post" exact component={AddPost} />
               )}

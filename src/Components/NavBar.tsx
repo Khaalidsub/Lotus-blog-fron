@@ -3,7 +3,8 @@ import Button from "./Widgets/Buttons/Button";
 import { getUserSession } from "../store";
 import { connect } from "react-redux";
 import { UserAction } from "../store/interface";
-export interface NavBarProps {
+import { Link, RouteComponentProps } from "react-router-dom";
+export interface NavBarProps extends RouteComponentProps {
   getUserSession: () => Promise<any>;
   user: UserAction;
   isSignedIn: boolean;
@@ -25,14 +26,17 @@ class _NavBar extends React.Component<NavBarProps, NavBarState> {
     const type = this.props.isSignedIn ? (
       <Button label="Logout" />
     ) : (
-      <Button label="SignUp/In" />
+      <Button
+        function={() => this.props.history.push("/sign_form")}
+        label="SignUp/In"
+      />
     );
 
     return (
       <div className="sticky top-0 z-50 bg-secondary-background">
         <nav className="flex  items-center justify-between flex-wrap  p-6 border border-solid border-black">
           <div className="flex items-center flex-shrink-0 text-primary mr-6">
-            <span className="font-semibold text-xl tracking-tight">
+            <span className="font-semibold text-xl tracking-tight ">
               LOTUS BLOGS
             </span>
           </div>
@@ -60,24 +64,18 @@ class _NavBar extends React.Component<NavBarProps, NavBarState> {
             } flex-grow lg:flex lg:items-center lg:w-auto`}
           >
             <div className="text-sm lg:flex-grow text-primary">
-              <a
-                href="#responsive-header"
+              <Link
+                to="/"
                 className="block mt-4 lg:inline-block lg:mt-0  hover:text-secondary mr-4"
               >
                 Home
-              </a>
-              <a
-                href="#responsive-header"
+              </Link>
+              <Link
+                to="/blogs/posts"
                 className="block mt-4 lg:inline-block lg:mt-0  hover:text-secondary mr-4"
               >
                 Posts
-              </a>
-              <a
-                href="#responsive-header"
-                className="block mt-4 lg:inline-block lg:mt-0  hover:text-secondary"
-              >
-                People
-              </a>
+              </Link>
             </div>
             <div>{type}</div>
           </div>

@@ -20,32 +20,45 @@ export interface AddPostProps extends RouteComponentProps {
   posts: PostAction[];
   fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
 }
-const post = (post: PostAction): JSX.Element => {
+const Post = (props: { post: PostAction; function: any }): JSX.Element => {
   return (
-    <PostImageCard
-      image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-      subtitle={post.subtitle}
-      title={post.title}
-      info="Latest"
+    <div
+      className="hover:bg-negative cursor-pointer"
+      onClick={() => props.function(props.post.id)}
     >
-      <PostUserInfo
-        user={(post.user as UserAction).name}
+      <PostImageCard
         image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-      />
-      <CategoryCard category={(post.category as CategoryAction).name} />
-    </PostImageCard>
+        subtitle={props.post.subtitle}
+        title={props.post.title}
+        info="Latest"
+      >
+        <PostUserInfo
+          user={(props.post.user as UserAction).name}
+          image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        />
+        <CategoryCard category={(props.post.category as CategoryAction).name} />
+      </PostImageCard>
+    </div>
   );
 };
 
-const feauturedPost = (post: PostAction): JSX.Element => {
+const FeauturedPost = (props: {
+  post: PostAction;
+  function: any;
+}): JSX.Element => {
   return (
-    <PostCard
-      subtitle={post.subtitle}
-      title={post.title}
-      image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+    <div
+      className="hover:bg-negative cursor-pointer"
+      onClick={() => props.function(props.post.id)}
     >
-      <CategoryCard category={(post.category as CategoryAction).name} />
-    </PostCard>
+      <PostCard
+        subtitle={props.post.subtitle}
+        title={props.post.title}
+        image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+      >
+        <CategoryCard category={(props.post.category as CategoryAction).name} />
+      </PostCard>
+    </div>
   );
 };
 class _Home extends React.Component<AddPostProps> {
@@ -60,7 +73,15 @@ class _Home extends React.Component<AddPostProps> {
         post.subtitle = post.subtitle.replace(/&nbsp;/gi, "");
         return post;
       });
-      return this.props.posts.map(post);
+      return this.props.posts.map((data) => (
+        <Post
+          function={(id: string) =>
+            this.props.history.push(`/blogs/posts/view_post/${id}`)
+          }
+          post={data}
+          key={data.id}
+        />
+      ));
     } else return <div></div>;
   }
 
@@ -74,7 +95,16 @@ class _Home extends React.Component<AddPostProps> {
       });
       let index = 0;
       return this.props.posts.map((data, i) => {
-        if (i < 3) return feauturedPost(data);
+        if (i < 3)
+          return (
+            <FeauturedPost
+              function={(id: string) =>
+                this.props.history.push(`/blogs/posts/view_post/${id}`)
+              }
+              post={data}
+              key={data.id}
+            />
+          );
 
         return <div></div>;
       }, index++);
