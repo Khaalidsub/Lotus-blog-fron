@@ -75,6 +75,8 @@ export const selectData = <T>(url: string) => async (
   try {
     const response = await lotusApi.get(`/${url}`);
     // dispatch(registering(response.data));
+    console.log("getting posts", response);
+
     dispatch(selecting<T>(response.data));
   } catch (error) {
     console.log(error);

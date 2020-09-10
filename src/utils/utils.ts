@@ -115,6 +115,7 @@ export const style = {
   },
   paragraph: {
     fontFamily: "'Lora', serif",
+    color: "var(--color-secondary)",
   },
   list: {
     fontFamily: "'Lora', serif",

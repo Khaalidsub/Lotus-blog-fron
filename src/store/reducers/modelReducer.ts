@@ -30,9 +30,7 @@ export default (
     case ModelActions.select:
       return {
         ...storeData,
-        [action.dataType]: storeData[action.dataType].find(
-          (data: IModel) => data.id === (action.payload as IModel).id
-        ),
+        [action.dataType]: action.payload,
       };
     case ModelActions.edit:
       return {

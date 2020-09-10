@@ -7,7 +7,7 @@ import Home from "./Components/Routes/Home";
 import Profile from "./Components/Routes/Profile";
 import { Posts } from "./Components/Routes/Posts";
 import AddPost from "./Components/Routes/AddPost";
-import { ViewPost } from "./Components/Routes/ViewPost";
+import ViewPost from "./Components/Routes/ViewPost";
 
 import SignForm from "./Components/Routes/SignForm";
 import EditProfile from "./Components/Routes/EditProfile";
