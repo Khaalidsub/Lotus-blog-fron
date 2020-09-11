@@ -38,7 +38,15 @@ export const adding = <T>(data: T, dataType: dataTypes): Action<T> => ({
 export const loggingOut = (): AuthAction => ({
   type: AuthActions.logout,
   dataType: dataTypes.user,
-  payload: { name: "", email: "", password: "", image: "", id: "" },
+  payload: {
+    name: "",
+    email: "",
+    password: "",
+    image: "",
+    id: "",
+    bookMarkedPosts: [],
+    likedPosts: [],
+  },
 });
 
 export const authenticating = (data: UserAction): AuthAction => ({

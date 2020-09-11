@@ -35,8 +35,8 @@ export interface CredentialAction {
 export interface UserAction extends CredentialAction, IModel {
   id?: string;
   name: string;
-  likedPosts?: PostAction[] | string;
-  bookMarkedPosts?: PostAction[] | string;
+  likedPosts: PostAction[] | string;
+  bookMarkedPosts: PostAction[] | string;
   image?: string;
 }
 

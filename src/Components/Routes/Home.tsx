@@ -116,7 +116,7 @@ class _Home extends React.Component<AddPostProps> {
               <PaginationButtons />
             )}
           </div>
-          <div className="mx-auto lg:my-auto sticky">
+          <div className="mx-auto  ">
             <h4 className="text-3xl italic text-tertiary text-center mb-16 mt-10 lg:mt-0">
               Feautured Posts
             </h4>

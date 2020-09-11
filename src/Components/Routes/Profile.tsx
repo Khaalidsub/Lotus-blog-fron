@@ -2,13 +2,101 @@ import React from "react";
 import Button from "../Widgets/Buttons/Button";
 import { PaginationButtons } from "../Widgets/Buttons/PaginationButtons";
 import { PostImageCard } from "../Widgets/Cards/PostImageCard";
+import { PostAction, CombinedReducer, UserAction } from "../../store/interface";
+import { fetchCollection, selectData } from "../../store";
+import { RouteComponentProps } from "react-router-dom";
 
-export interface ProfileProps {}
+import { connect } from "react-redux";
+import { dataTypes } from "../../store/types";
+
+export interface ProfileProps extends RouteComponentProps<{ id: string }> {
+  posts: PostAction[];
+  user: UserAction;
+  userProfile: UserAction;
+  fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
+  selectData: (url: string) => Promise<any>;
+}
 
 export interface ProfileState {}
 
-class Profile extends React.Component<ProfileProps, ProfileState> {
-  // state = { :  }
+const Posts = (props: {
+  post: PostAction;
+  function: any;
+  isUser: boolean;
+}): JSX.Element => {
+  return (
+    <PostImageCard post={props.post}>
+      {props.isUser && (
+        <div className="text-center md:text-left">
+          <Button label="Edit Post" type="warning" />
+          <Button label="Delete Post" type="negative" />
+        </div>
+      )}
+    </PostImageCard>
+  );
+};
+enum postType {
+  written,
+  booked,
+  liked,
+}
+class _Profile extends React.Component<ProfileProps, ProfileState> {
+  state = { type: postType.written };
+  componentDidMount() {
+    this.props.selectData(`user/${this.props.match.params.id}`);
+    this.props.fetchCollection("posts", dataTypes.post);
+  }
+  renderPosts() {
+    if (this.props.posts !== undefined) {
+      this.props.posts.map((post) => {
+        post.title = post.title.replace(/&nbsp;/gi, "");
+        post.subtitle = post.subtitle.replace(/&nbsp;/gi, "");
+        return post;
+      });
+
+      return this.renderTypePost().map((data) => {
+        return (
+          <Posts
+            function={(id: string) =>
+              this.props.history.push(`/blogs/posts/view_post/${id}`)
+            }
+            isUser={this.props.user.id === this.props.match.params.id}
+            post={data}
+            key={data.id}
+          />
+        );
+      });
+    } else return <div></div>;
+  }
+
+  componentWillUnmount() {
+    console.log("yooo i am unmounting");
+  }
+
+  renderTypePost = (): PostAction[] => {
+    switch (this.state.type) {
+      case postType.written:
+        return this.props.posts.filter(
+          (post) =>
+            (post.user as UserAction).id ===
+            (this.props.userProfile as UserAction).id
+        );
+      case postType.liked:
+        return this.props.posts.filter((post) =>
+          ((this.props.userProfile as UserAction)
+            .likedPosts as PostAction[])?.find(
+            (likedPost) => likedPost.id === post.id
+          )
+        );
+      case postType.booked:
+        return this.props.posts.filter((post) =>
+          ((this.props.userProfile as UserAction)
+            .bookMarkedPosts as PostAction[])?.find(
+            (bookedPost) => bookedPost.id === post.id
+          )
+        );
+    }
+  };
   render() {
     return (
       <div className="mx-12 my-12">
@@ -32,22 +120,28 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         </div>
         <ul className="max-w-md  flex justify-between mx-auto">
           <li>
-            <a className="text-tertiary hover:text-primary" href="#">
+            <span
+              className="cursor-pointer text-tertiary hover:text-primary"
+              onClick={() => this.setState({ type: postType.written })}
+            >
               Written Posts
-            </a>
+            </span>
           </li>
           <li>
-            <a
-              className="text-center  text-tertiary hover:text-primary "
-              href="#"
+            <span
+              className="cursor-pointer  text-center  text-tertiary hover:text-primary "
+              onClick={() => this.setState({ type: postType.booked })}
             >
               BookMarks
-            </a>
+            </span>
           </li>
           <li>
-            <a className="text-tertiary hover:text-primary" href="#">
+            <span
+              className="cursor-pointer text-tertiary hover:text-primary"
+              onClick={() => this.setState({ type: postType.liked })}
+            >
               Liked Posts
-            </a>
+            </span>
           </li>
         </ul>
         <div className="mt-5 lg:mx-64 border-tertiary border-t-2">
@@ -55,43 +149,25 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         </div>
         <div className="lg:max-w-4xl lg:mx-auto md:grid md:grid-cols-1 mt-10 mb-10">
           <div className="mx-auto">
-            <PaginationButtons />
-            {/* <PostImageCard
-              image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-            >
-              <div className="text-center md:text-left">
-                <Button label="Edit Post" type="warning" />
-                <Button label="Delete Post" type="negative" />
-              </div>
-            </PostImageCard>
-            <PostImageCard
-              image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-            >
-              <div className="text-center md:text-left">
-                <Button label="Edit Post" type="warning" />
-                <Button label="Delete Post" type="negative" />
-              </div>
-            </PostImageCard>
-            <PostImageCard
-              image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-            >
-              <div className="text-center md:text-left">
-                <Button label="Edit Post" type="warning" />
-                <Button label="Delete Post" type="negative" />
-              </div>
-            </PostImageCard> */}
-            <PaginationButtons />
+            {this.props.posts !== undefined && this.props.posts.length > 8 && (
+              <PaginationButtons />
+            )}
+            {this.renderPosts()}
+
+            {this.props.posts !== undefined && this.props.posts.length > 8 && (
+              <PaginationButtons />
+            )}
           </div>
         </div>
       </div>
     );
   }
 }
-
-export default Profile;
+const mapStateToProps = (state: CombinedReducer) => ({
+  posts: state.modelData.POST,
+  user: state.stateData.USER,
+  userProfile: state.modelData.SELECT,
+});
+export default connect(mapStateToProps, { fetchCollection, selectData })(
+  _Profile
+);
