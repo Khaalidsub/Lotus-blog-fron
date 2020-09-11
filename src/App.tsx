@@ -1,5 +1,11 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  RouteComponentProps,
+  Link,
+} from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import Home from "./Components/Routes/Home";
@@ -12,12 +18,13 @@ import ViewPost from "./Components/Routes/ViewPost";
 import SignForm from "./Components/Routes/SignForm";
 import EditProfile from "./Components/Routes/EditProfile";
 import Header from "./Components/Header";
-import { CombinedReducer } from "./store/interface";
+import { CombinedReducer, UserAction } from "./store/interface";
 import { connect } from "react-redux";
 import ErrorPage from "./Components/Routes/ErrorPage";
-
+import "./styles/app.css";
 export interface AppProps {
   isSignedIn: boolean;
+  user: UserAction;
 }
 
 export interface AppState {}
@@ -25,17 +32,17 @@ export interface AppState {}
 class _App extends React.Component<AppProps, AppState> {
   render() {
     return (
-      <div>
-        <React.Fragment>
-          <Router>
-            <Route component={Header} />
+      <React.Fragment>
+        <Router>
+          <Route render={() => <Header user={this.props.user} />} />
 
-            <Route component={NavBar} />
+          <Route component={NavBar} />
+          <div className="relative">
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/blogs/posts" exact component={Posts} />
               {this.props.isSignedIn && (
-                <Route path="/blogs/profile" exact component={Profile} />
+                <Route path="/blogs/profile/:id" exact component={Profile} />
               )}
               {this.props.isSignedIn && (
                 <Route
@@ -58,18 +65,19 @@ class _App extends React.Component<AppProps, AppState> {
 
               <Route component={ErrorPage} />
             </Switch>
-            {this.props.isSignedIn && <Route component={addButton} />}
-            <Route component={Footer} />
-          </Router>
-        </React.Fragment>
-      </div>
+          </div>
+          {this.props.isSignedIn && <Route component={addButton} />}
+
+          {/* <Route component={Footer} /> */}
+        </Router>
+      </React.Fragment>
     );
   }
 }
 
 const addButton = (): JSX.Element => {
   return (
-    <React.Fragment>
+    <Link className="cursor-pointer" to="/blogs/posts/add_post">
       <div className="md:hidden fixed bottom-0 z-20 right-0 p-5">
         <div className="   border-4 border-primary  bg-secondary-background p-3 text-secondary rounded-full text-xl  text-center">
           +
@@ -80,10 +88,11 @@ const addButton = (): JSX.Element => {
           Add a new Post
         </div>
       </div>
-    </React.Fragment>
+    </Link>
   );
 };
 const mapStateToProps = (state: CombinedReducer) => ({
   isSignedIn: state.stateData.isSignedIn,
+  user: state.stateData.USER,
 });
 export default connect(mapStateToProps, {})(_App);

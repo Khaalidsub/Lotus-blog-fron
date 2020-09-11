@@ -9,8 +9,8 @@ import Marker from "@editorjs/marker";
 import Checklist from "@editorjs/checklist";
 
 export const editorjsConfig = {
-  holder: "editorjs",
-  minHeight: 100,
+  // holder: "editorjs",
+  minHeight: 150,
   tools: {
     list: {
       class: List,

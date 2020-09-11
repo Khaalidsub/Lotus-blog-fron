@@ -4,7 +4,7 @@ import { postSample, style } from "../../utils/utils";
 import "../../styles/viewPost.css";
 import { PostAction, CombinedReducer, UserAction } from "../../store/interface";
 import { selectData } from "../../store";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
 export interface ViewPostProps extends RouteComponentProps<{ id: string }> {
   post: PostAction;
@@ -31,9 +31,15 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
               alt="Avatar of Jonathan Reinink"
             />
             <div className="text-sm">
-              <p className="text-tertiary leading-none">
-                {(this.props.post.user as UserAction)?.name}
-              </p>
+              <Link
+                to={`/blogs/profile/${
+                  (this.props.post.user as UserAction)?.id
+                }`}
+              >
+                <p className="text-tertiary leading-none hover:underline">
+                  {(this.props.post.user as UserAction)?.name}
+                </p>
+              </Link>
               <p className="text-gray-600">Aug 18</p>
             </div>
           </div>

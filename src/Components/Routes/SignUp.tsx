@@ -16,8 +16,8 @@ import NotifcationCard from "../Widgets/Cards/NotificationCard";
 class _SignUp extends React.Component<any, any> {
   state = {
     loading: false,
-    isError: true,
-    errorMessage: "fwefewfwef",
+
+    errorMessage: "",
     typeError: "negative",
   };
   async handleSubmit(user: any) {
@@ -35,11 +35,12 @@ class _SignUp extends React.Component<any, any> {
   }
   render() {
     return (
-      <div className="relative">
+      <React.Fragment>
         <NotifcationCard
-          isShown={this.state.isError}
+          isShown={this.state.errorMessage.length > 0}
           message={this.state.errorMessage}
           type={this.state.typeError}
+          hide={() => this.setState({ errorMessage: "" })}
         />
 
         <Form
@@ -101,7 +102,7 @@ class _SignUp extends React.Component<any, any> {
           <SubmitButton loading={this.state.loading} label="Sign Up" />
           <LoadingAnimation loading={this.state.loading} />
         </Form>
-      </div>
+      </React.Fragment>
     );
   }
 }

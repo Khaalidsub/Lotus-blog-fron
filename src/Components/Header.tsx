@@ -5,7 +5,11 @@ import { applyTheme } from "../utils/theme";
 
 import { getlocalStorage, setlocalStorage } from "../utils/localStorage";
 import "../styles/header.css";
-export interface HeaderProps {}
+import { UserAction } from "../store/interface";
+import { Link } from "react-router-dom";
+export interface HeaderProps {
+  user?: UserAction;
+}
 
 export interface HeaderState {}
 
@@ -36,7 +40,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   }
   render() {
     return (
-      <div className="p-5">
+      <div className="p-5 flex flex-row justify-between">
         <div className="m-6">
           <div
             className="switch h-6 w-12 rounded-full bg-tertiary"
@@ -50,6 +54,25 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             />
           </div>
         </div>
+        {this.props.user && (
+          <Link to={`/blogs/profile/${(this.props.user as UserAction)?.id}`}>
+            <div className="flex flex-col items-center ml-3 mr-3">
+              <img
+                className="w-10 h-10 rounded-full mb-4"
+                src={
+                  this.props.user.image ||
+                  "https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+                }
+                alt={`Avatar of ${this.props.user}`}
+              />
+              <div className="text-sm text-center">
+                <p className="text-tertiary leading-none hover:underline">
+                  {this.props.user.name}
+                </p>
+              </div>
+            </div>
+          </Link>
+        )}
       </div>
     );
   }

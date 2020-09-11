@@ -13,43 +13,27 @@ import {
   CategoryAction,
 } from "../../store/interface";
 import { fetchCollection } from "../../store";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
 export interface AddPostProps extends RouteComponentProps {
   posts: PostAction[];
   fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
 }
-const Post = (props: { post: PostAction; function: any }): JSX.Element => {
+const Post = (props: { post: PostAction }): JSX.Element => {
   return (
-    <div
-      className="hover:bg-negative cursor-pointer"
-      onClick={() => props.function(props.post.id)}
-    >
-      <PostImageCard
-        image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-        subtitle={props.post.subtitle}
-        title={props.post.title}
-        info="Latest"
-      >
-        <PostUserInfo
-          user={(props.post.user as UserAction).name}
-          image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-        />
-        <CategoryCard category={(props.post.category as CategoryAction).name} />
-      </PostImageCard>
-    </div>
+    <PostImageCard post={props.post} info="Latest">
+      <PostUserInfo user={props.post.user as UserAction} />
+      <CategoryCard category={(props.post.category as CategoryAction).name} />
+    </PostImageCard>
   );
 };
 
-const FeauturedPost = (props: {
-  post: PostAction;
-  function: any;
-}): JSX.Element => {
+const FeauturedPost = (props: { post: PostAction }): JSX.Element => {
   return (
-    <div
+    <Link
       className="hover:bg-negative cursor-pointer"
-      onClick={() => props.function(props.post.id)}
+      to={`/blogs/posts/view_post/${props.post.id}`}
     >
       <PostCard
         subtitle={props.post.subtitle}
@@ -58,7 +42,7 @@ const FeauturedPost = (props: {
       >
         <CategoryCard category={(props.post.category as CategoryAction).name} />
       </PostCard>
-    </div>
+    </Link>
   );
 };
 class _Home extends React.Component<AddPostProps> {
@@ -73,15 +57,7 @@ class _Home extends React.Component<AddPostProps> {
         post.subtitle = post.subtitle.replace(/&nbsp;/gi, "");
         return post;
       });
-      return this.props.posts.map((data) => (
-        <Post
-          function={(id: string) =>
-            this.props.history.push(`/blogs/posts/view_post/${id}`)
-          }
-          post={data}
-          key={data.id}
-        />
-      ));
+      return this.props.posts.map((data) => <Post post={data} key={data.id} />);
     } else return <div></div>;
   }
 
@@ -95,16 +71,7 @@ class _Home extends React.Component<AddPostProps> {
       });
       let index = 0;
       return this.props.posts.map((data, i) => {
-        if (i < 3)
-          return (
-            <FeauturedPost
-              function={(id: string) =>
-                this.props.history.push(`/blogs/posts/view_post/${id}`)
-              }
-              post={data}
-              key={data.id}
-            />
-          );
+        if (i < 3) return <FeauturedPost post={data} key={data.id} />;
 
         return <div></div>;
       }, index++);

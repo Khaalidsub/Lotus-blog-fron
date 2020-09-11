@@ -4,10 +4,11 @@ import toughCookie from "tough-cookie";
 
 export const server = "http://157.245.57.136/blog";
 export const localhost = "http://10.100.16.37:8083/blog";
+export const cookie = "app=";
 const axios = Axios.create({
   baseURL: localhost,
   headers: {
-    Cookie: "app",
+    Authorization: cookie,
   },
 
   xsrfCookieName: "app",

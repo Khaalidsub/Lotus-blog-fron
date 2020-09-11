@@ -56,7 +56,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         <div className="lg:max-w-4xl lg:mx-auto md:grid md:grid-cols-1 mt-10 mb-10">
           <div className="mx-auto">
             <PaginationButtons />
-            <PostImageCard
+            {/* <PostImageCard
               image="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
               subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
               title="Post title"
@@ -85,7 +85,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                 <Button label="Edit Post" type="warning" />
                 <Button label="Delete Post" type="negative" />
               </div>
-            </PostImageCard>
+            </PostImageCard> */}
             <PaginationButtons />
           </div>
         </div>

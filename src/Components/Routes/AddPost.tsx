@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, ErrorInfo } from "react";
 import EditorJS from "@editorjs/editorjs";
 import "../../styles/addPost.css";
 import { editorjsConfig } from "../../utils/config";
@@ -15,6 +15,7 @@ import { dataTypes, data } from "../../store/types";
 import SubmitButton from "../Widgets/Buttons/SubmitButton";
 import LoadingAnimation from "../Widgets/loadingAnimation";
 import { RouteComponentProps } from "react-router-dom";
+import NotifcationCard from "../Widgets/Cards/NotificationCard";
 
 export interface AddPostProps extends RouteComponentProps {
   user: UserAction;
@@ -30,7 +31,7 @@ export interface AddPostState {}
 
 class _AddPost extends React.Component<AddPostProps, AddPostState> {
   state = {
-    editor: ({} as EditorJS) as any,
+    editor: {} as EditorJS,
     error: "",
     post: {} as PostAction,
     loading: false,
@@ -40,9 +41,16 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
       editor: new EditorJS(editorjsConfig),
     });
   }
+  // componentDidCatch() {
+  //   console.log("there is an error!");
+  // }
+  componentDidCatch(error: Error, ErrorInfo: React.ErrorInfo) {
+    console.log("there is an error!", error, ErrorInfo);
+  }
+
   validateBlock = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("hello", this.state.editor);
+    // console.log("hello", this.state.editor);
     this.setState({ loading: true });
     let errorMessage = "";
     let subtitle = "";
@@ -59,10 +67,12 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
 
       if (result.blocks[0].type != "header")
         errorMessage += "No Title : Add a Type Header!";
-      if (result.blocks[1].type != "header") {
-        if (paragraph.data.text.length < 25) subtitle = paragraph.data.text;
-        else subtitle = paragraph.data.text.substring(0, 25);
-      } else subtitle = result.blocks[1].data.text;
+      if (result.blocks.length > 2) {
+        if (result.blocks[1].type != "header") {
+          if (paragraph.data.text.length < 25) subtitle = paragraph.data.text;
+          else subtitle = paragraph.data.text.substring(0, 25);
+        } else subtitle = result.blocks[1].data.text;
+      } else errorMessage += "  Not Enough Lines : Write a bit more";
     } else errorMessage += "No Paragraph : write a type paragraph!";
 
     if (!errorMessage.trim()) {
@@ -102,21 +112,31 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     return true;
   }
   render() {
-    // console.log("hello in post", );
+    // console.log("hello in post", this.state.editor);
+    // if (this.state.editor.) {
 
+    // }
     return (
-      <div className="relative max-w-4xl mt-5 mb-5 pt-10 pb-5 pl-3 pr-3 rounded-lg mx-auto">
-        <form
-          onSubmit={this.validateBlock}
-          className="text-secondary bg-secondary-background rounded-lg  shadow-xl p-5"
-        >
-          <div id="editorjs"></div>
-          <div className="text-center block w-full">
-            <SubmitButton loading={this.state.loading} label="Add Article" />
-            <LoadingAnimation loading={this.state.loading} />
-          </div>
-        </form>
-      </div>
+      <React.Fragment>
+        <NotifcationCard
+          message={this.state.error}
+          isShown={this.state.error.length > 0}
+          type="negative"
+          hide={() => this.setState({ error: "" })}
+        />
+        <div className="max-w-4xl mt-5 mb-5 pt-10 pb-5 pl-3 pr-3 rounded-lg mx-auto">
+          <form
+            onSubmit={this.validateBlock}
+            className="text-secondary bg-secondary-background rounded-lg  shadow-xl p-5"
+          >
+            <div id="editorjs"></div>
+            <div className="text-center block w-full">
+              <SubmitButton loading={this.state.loading} label="Add Article" />
+              <LoadingAnimation loading={this.state.loading} />
+            </div>
+          </form>
+        </div>
+      </React.Fragment>
     );
   }
 }
