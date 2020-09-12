@@ -3,8 +3,8 @@ import Button from "../Widgets/Buttons/Button";
 import { PaginationButtons } from "../Widgets/Buttons/PaginationButtons";
 import { PostImageCard } from "../Widgets/Cards/PostImageCard";
 import { PostAction, CombinedReducer, UserAction } from "../../store/interface";
-import { fetchCollection, selectData } from "../../store";
-import { RouteComponentProps } from "react-router-dom";
+import { fetchCollection, selectData, deleteData } from "../../store";
+import { Link, RouteComponentProps } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
@@ -15,21 +15,32 @@ export interface ProfileProps extends RouteComponentProps<{ id: string }> {
   userProfile: UserAction;
   fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
   selectData: (url: string) => Promise<any>;
+  deleteData: <PostAction>(
+    data: PostAction,
+    url: string,
+    dataTypes: dataTypes.post
+  ) => Promise<any>;
 }
 
 export interface ProfileState {}
 
 const Posts = (props: {
   post: PostAction;
-  function: any;
+  deleteFunction: any;
   isUser: boolean;
 }): JSX.Element => {
   return (
     <PostImageCard post={props.post}>
       {props.isUser && (
         <div className="text-center md:text-left">
-          <Button label="Edit Post" type="warning" />
-          <Button label="Delete Post" type="negative" />
+          <Link to={`/blogs/posts/add_post/${props.post.id}`}>
+            <Button label="Edit Post" type="warning" />
+          </Link>
+          <Button
+            function={props.deleteFunction}
+            label="Delete Post"
+            type="negative"
+          />
         </div>
       )}
     </PostImageCard>
@@ -57,8 +68,12 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
       return this.renderTypePost().map((data) => {
         return (
           <Posts
-            function={(id: string) =>
-              this.props.history.push(`/blogs/posts/view_post/${id}`)
+            deleteFunction={() =>
+              this.props.deleteData(
+                data,
+                `posts/post/${data.id}`,
+                dataTypes.post
+              )
             }
             isUser={this.props.user.id === this.props.match.params.id}
             post={data}
@@ -114,7 +129,9 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
             </div>
 
             <div className="text-center z-10 lg:text-right order-last">
-              <Button label="Edit Profile" />
+              {this.props.user.id === this.props.userProfile.id && (
+                <Button label="Edit Profile" />
+              )}
             </div>
           </div>
         </div>
@@ -127,14 +144,16 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
               Written Posts
             </span>
           </li>
-          <li>
-            <span
-              className="cursor-pointer  text-center  text-tertiary hover:text-primary "
-              onClick={() => this.setState({ type: postType.booked })}
-            >
-              BookMarks
-            </span>
-          </li>
+          {this.props.user.id === this.props.userProfile.id && (
+            <li>
+              <span
+                className="cursor-pointer  text-center  text-tertiary hover:text-primary "
+                onClick={() => this.setState({ type: postType.booked })}
+              >
+                BookMarks
+              </span>
+            </li>
+          )}
           <li>
             <span
               className="cursor-pointer text-tertiary hover:text-primary"
@@ -168,6 +187,8 @@ const mapStateToProps = (state: CombinedReducer) => ({
   user: state.stateData.USER,
   userProfile: state.modelData.SELECT,
 });
-export default connect(mapStateToProps, { fetchCollection, selectData })(
-  _Profile
-);
+export default connect(mapStateToProps, {
+  fetchCollection,
+  selectData,
+  deleteData,
+})(_Profile);

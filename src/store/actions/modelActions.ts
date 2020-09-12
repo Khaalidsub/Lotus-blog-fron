@@ -48,6 +48,7 @@ export const updateData = <T>(
     const response = await lotusApi.put(`/${url}`, data);
     // dispatch(registering(response.data));
     dispatch(editing<T>(response.data, dataTypes));
+    return true;
   } catch (error) {
     console.log(error);
 
@@ -60,9 +61,10 @@ export const deleteData = <T>(
   dataTypes: dataTypes
 ) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   try {
-    const response = await lotusApi.delete(`/${url}`, data);
+    const response = await lotusApi.delete(`/${url}`);
     // dispatch(registering(response.data));
-    dispatch(deleting<T>(response.data, dataTypes));
+    dispatch(deleting<T>(data, dataTypes));
+    return true;
   } catch (error) {
     console.log(error);
 

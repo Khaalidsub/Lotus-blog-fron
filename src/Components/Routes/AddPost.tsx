@@ -1,9 +1,8 @@
-import React, { FormEvent, ErrorInfo } from "react";
-import EditorJS from "@editorjs/editorjs";
+import React, { FormEvent } from "react";
+import EditorJS, { OutputData } from "@editorjs/editorjs";
 import "../../styles/addPost.css";
 import { editorjsConfig } from "../../utils/config";
-import Button from "../Widgets/Buttons/Button";
-import { addData } from "../../store";
+import { addData, selectData, updateData } from "../../store";
 import {
   PostAction,
   CombinedReducer,
@@ -11,20 +10,27 @@ import {
   UserAction,
 } from "../../store/interface";
 import { connect } from "react-redux";
-import { dataTypes, data } from "../../store/types";
+import { dataTypes } from "../../store/types";
 import SubmitButton from "../Widgets/Buttons/SubmitButton";
 import LoadingAnimation from "../Widgets/loadingAnimation";
 import { RouteComponentProps } from "react-router-dom";
 import NotifcationCard from "../Widgets/Cards/NotificationCard";
 
-export interface AddPostProps extends RouteComponentProps {
+export interface AddPostProps extends RouteComponentProps<{ id: string }> {
   user: UserAction;
   category: CategoryAction[];
+  prevPost: PostAction | OutputData;
   addData: <PostAction>(
     data: PostAction,
     url: string,
     dataTypes: dataTypes.post
   ) => Promise<any>;
+  updateData: <PostAction>(
+    data: PostAction,
+    url: string,
+    dataTypes: dataTypes.post
+  ) => Promise<any>;
+  selectData: (url: string) => Promise<any>;
 }
 
 export interface AddPostState {}
@@ -35,11 +41,22 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     error: "",
     post: {} as PostAction,
     loading: false,
+    subtitle: "",
   };
-  componentDidMount() {
-    this.setState({
-      editor: new EditorJS(editorjsConfig),
-    });
+  async componentDidMount() {
+    if (!this.props.match.params.id) {
+      this.setState({
+        editor: new EditorJS(editorjsConfig),
+      });
+    } else {
+      await this.props.selectData(`posts/post/${this.props.match.params.id}`);
+      this.setState({
+        editor: new EditorJS({
+          ...editorjsConfig,
+          data: this.props.prevPost as OutputData,
+        }),
+      });
+    }
   }
   // componentDidCatch() {
   //   console.log("there is an error!");
@@ -48,61 +65,97 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     console.log("there is an error!", error, ErrorInfo);
   }
 
-  validateBlock = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // console.log("hello", this.state.editor);
-    this.setState({ loading: true });
-    let errorMessage = "";
+  validatedData = (result: OutputData) => {
     let subtitle = "";
-    // su;
-    const result = await this.state.editor.save();
-    console.log("result post", result);
-
+    let errorMessage = "";
     const paragraph = result.blocks.find(
-      (block: any) => block.type == "paragraph"
+      (block: any) => block.type === "paragraph"
     );
     if (paragraph) {
       if (!this.validateParagraph(paragraph.data)) {
       }
 
-      if (result.blocks[0].type != "header")
+      if (result.blocks[0].type !== "header")
         errorMessage += "No Title : Add a Type Header!";
       if (result.blocks.length > 2) {
-        if (result.blocks[1].type != "header") {
+        if (result.blocks[1].type !== "header") {
           if (paragraph.data.text.length < 25) subtitle = paragraph.data.text;
           else subtitle = paragraph.data.text.substring(0, 25);
         } else subtitle = result.blocks[1].data.text;
       } else errorMessage += "  Not Enough Lines : Write a bit more";
     } else errorMessage += "No Paragraph : write a type paragraph!";
 
-    if (!errorMessage.trim()) {
-      this.setState({
-        post: {
-          title: result.blocks[0]?.data.text,
-          subtitle: subtitle,
-          createdAt: new Date(),
-          blocks: result.blocks,
-          user: this.props.user.id,
-          category: this.props.category[0].id,
-        },
-      });
-      console.log("sending..", this.state.post);
+    this.setState({ subtitle: subtitle, error: errorMessage });
 
-      const response = await this.props.addData(
-        this.state.post,
-        "posts/",
-        dataTypes.post
-      );
-      if (response === true) {
-        this.props.history.replace("/");
+    return errorMessage;
+  };
+
+  validateBlock = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // console.log("hello", this.state.editor);
+    this.setState({ loading: true });
+
+    // su;
+    const result = await this.state.editor.save();
+    // console.log("result post", result);
+    let errorMessage = this.validatedData(result);
+
+    if (!errorMessage.trim()) {
+      if (!this.props.match.params.id) {
+        this.addPost(result);
+      } else {
+        this.updatePost(result);
       }
-    } else {
-      this.setState({
-        error: errorMessage,
-      });
     }
 
     this.setState({ loading: false });
+  };
+
+  addPost = async (result: OutputData) => {
+    this.setState({
+      post: {
+        title: result.blocks[0]?.data.text,
+        subtitle: this.state.subtitle,
+        createdAt: new Date(),
+        blocks: result.blocks,
+        user: this.props.user.id,
+        category: this.props.category[0].id,
+      },
+    });
+    // console.log("sending..", this.state.post);
+
+    const response = await this.props.addData(
+      this.state.post,
+      "posts/",
+      dataTypes.post
+    );
+    if (response === true) {
+      this.props.history.replace("/");
+    }
+  };
+  updatePost = async (result: OutputData) => {
+    this.setState({
+      post: {
+        ...this.props.prevPost,
+
+        title: result.blocks[0]?.data.text,
+        subtitle: this.state.subtitle,
+        category: ((this.props.prevPost as PostAction)
+          .category as CategoryAction).id,
+        user: this.props.user.id,
+        blocks: result.blocks,
+      },
+    });
+    // console.log("updating..", this.state.post);
+
+    const response = await this.props.updateData(
+      this.state.post,
+      "posts/update",
+      dataTypes.post
+    );
+    if (response === true) {
+      this.props.history.goBack();
+    }
   };
 
   validateParagraph(data: any) {
@@ -112,10 +165,6 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     return true;
   }
   render() {
-    // console.log("hello in post", this.state.editor);
-    // if (this.state.editor.) {
-
-    // }
     return (
       <React.Fragment>
         <NotifcationCard
@@ -131,7 +180,17 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
           >
             <div id="editorjs"></div>
             <div className="text-center block w-full">
-              <SubmitButton loading={this.state.loading} label="Add Article" />
+              {this.props.match.params.id ? (
+                <SubmitButton
+                  loading={this.state.loading}
+                  label="Update Article"
+                />
+              ) : (
+                <SubmitButton
+                  loading={this.state.loading}
+                  label="Add Article"
+                />
+              )}
               <LoadingAnimation loading={this.state.loading} />
             </div>
           </form>
@@ -143,5 +202,8 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
 const mapStateToProps = (state: CombinedReducer) => ({
   user: state.stateData.USER,
   category: state.modelData.CATEGORY,
+  prevPost: state.modelData.SELECT,
 });
-export default connect(mapStateToProps, { addData })(_AddPost);
+export default connect(mapStateToProps, { addData, selectData, updateData })(
+  _AddPost
+);

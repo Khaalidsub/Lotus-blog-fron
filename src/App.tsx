@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  RouteComponentProps,
-  Link,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch, Link } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import Home from "./Components/Routes/Home";
@@ -57,7 +51,12 @@ class _App extends React.Component<AppProps, AppState> {
                 component={ViewPost}
               />
               {this.props.isSignedIn && (
-                <Route path="/blogs/posts/add_post" exact component={AddPost} />
+                <Route
+                  path="/blogs/posts/add_post/:id"
+                  // path="/blogs/posts/add_post"
+
+                  component={AddPost}
+                />
               )}
               {!this.props.isSignedIn && (
                 <Route path="/sign_form" exact component={SignForm} />

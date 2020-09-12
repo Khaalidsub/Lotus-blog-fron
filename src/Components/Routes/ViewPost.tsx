@@ -1,6 +1,6 @@
 import React from "react";
 import Output from "editorjs-react-renderer";
-import { postSample, style } from "../../utils/utils";
+import { style } from "../../utils/utils";
 import "../../styles/viewPost.css";
 import { PostAction, CombinedReducer, UserAction } from "../../store/interface";
 import { selectData } from "../../store";
@@ -8,7 +8,7 @@ import { RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
 export interface ViewPostProps extends RouteComponentProps<{ id: string }> {
   post: PostAction;
-  selectPost: <PostAction>(url: string) => Promise<any>;
+  selectPost: (url: string) => Promise<any>;
 }
 
 export interface ViewPostState {}

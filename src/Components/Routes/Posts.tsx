@@ -12,7 +12,6 @@ import { fetchCollection } from "../../store";
 import { RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
-import { User } from "../../models/User";
 
 export interface PostsProps extends RouteComponentProps {
   posts: PostAction[];

@@ -5,7 +5,7 @@ import {
   data,
   collection,
 } from "../types";
-import { OutputData } from "@editorjs/editorjs";
+import { OutputBlockData, OutputData } from "@editorjs/editorjs";
 import { Blocks } from "@editorjs/editorjs/types/api";
 
 export interface IModel {
@@ -15,7 +15,7 @@ export interface PostAction extends IModel {
   id?: string;
   title: string;
   subtitle: string;
-  blocks: Blocks;
+  blocks: OutputBlockData;
   createdAt: Date;
   category?: CategoryAction | string;
   user?: UserAction | string;

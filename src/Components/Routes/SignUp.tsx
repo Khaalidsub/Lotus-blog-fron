@@ -2,7 +2,6 @@ import React from "react";
 import InputField from "../Widgets/InputField";
 import SubmitButton from "../Widgets/Buttons/SubmitButton";
 import { Form } from "react-redux-form";
-import { CredentialAction, UserAction } from "../../store/interface";
 import {
   required,
   validEmail,
