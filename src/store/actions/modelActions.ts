@@ -9,13 +9,18 @@ import {
 } from "./dispatchTypes";
 import { ThunkDispatch } from "redux-thunk";
 import { dataTypes, data } from "../types";
+const auth = "Bearer ";
 export const addData = <T>(
   data: data,
   url: string,
   dataTypes: dataTypes
 ) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   try {
-    const response = await lotusApi.post(`/${url}`, data);
+    const response = await lotusApi.post(`/${url}`, data, {
+      headers: {
+        Authorization: auth + localStorage.getItem("token"),
+      },
+    });
     // dispatch(registering(response.data));
 
     dispatch(adding<T>(response.data, dataTypes));
@@ -45,7 +50,11 @@ export const updateData = <T>(
   dataTypes: dataTypes
 ) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   try {
-    const response = await lotusApi.put(`/${url}`, data);
+    const response = await lotusApi.put(`/${url}`, data, {
+      headers: {
+        Authorization: auth + localStorage.getItem("token"),
+      },
+    });
     // dispatch(registering(response.data));
     dispatch(editing<T>(response.data, dataTypes));
     return true;
@@ -61,7 +70,11 @@ export const deleteData = <T>(
   dataTypes: dataTypes
 ) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   try {
-    const response = await lotusApi.delete(`/${url}`);
+    const response = await lotusApi.delete(`/${url}`, {
+      headers: {
+        Authorization: auth + localStorage.getItem("token"),
+      },
+    });
     // dispatch(registering(response.data));
     dispatch(deleting<T>(data, dataTypes));
     return true;

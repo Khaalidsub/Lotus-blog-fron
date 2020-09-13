@@ -54,7 +54,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             />
           </div>
         </div>
-        {this.props.user && (
+        {this.props.user?.id && (
           <Link to={`/blogs/profile/${(this.props.user as UserAction)?.id}`}>
             <div className="flex flex-col items-center ml-3 mr-3">
               <img

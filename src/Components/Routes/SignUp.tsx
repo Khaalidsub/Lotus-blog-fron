@@ -28,8 +28,14 @@ class _SignUp extends React.Component<any, any> {
       });
       this.setState({ loading: false });
     } else {
-      await this.props.addUser({ ...user, repeatPassword: undefined });
+      const result = await this.props.addUser({
+        ...user,
+        repeatPassword: undefined,
+      });
       this.setState({ loading: false });
+      if (result === true) {
+        this.props.history.replace("/");
+      }
     }
   }
   render() {

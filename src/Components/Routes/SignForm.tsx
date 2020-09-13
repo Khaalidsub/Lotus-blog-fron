@@ -1,15 +1,21 @@
 import React from "react";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
+import { RouteComponentProps } from "react-router-dom";
 
-export interface SignFormProps {}
+export interface SignFormProps extends RouteComponentProps {}
 
 export interface SignFormState {}
 
 class SignForm extends React.Component<SignFormProps, SignFormState> {
   state = { type: "Register" };
   render() {
-    const typeForm = this.state.type === "Register" ? <SignUp /> : <SignIn />;
+    const typeForm =
+      this.state.type === "Register" ? (
+        <SignUp history={this.props.history} />
+      ) : (
+        <SignIn history={this.props.history} />
+      );
     return (
       <div>
         <div className=" h-8 mx-auto mt-12 max-w-xs text-center grid grid-cols-2 bg-secondary-background rounded-full border border-primary">

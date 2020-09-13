@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Widgets/Buttons/Button";
-import { getUserSession } from "../store";
+import { getUserSession, logout } from "../store";
 import { connect } from "react-redux";
 import { UserAction } from "../store/interface";
 import { Link, RouteComponentProps } from "react-router-dom";
@@ -8,6 +8,7 @@ export interface NavBarProps extends RouteComponentProps {
   getUserSession: () => Promise<any>;
   user: UserAction;
   isSignedIn: boolean;
+  logout: () => Promise<any>;
 }
 
 export interface NavBarState {}
@@ -22,9 +23,15 @@ class _NavBar extends React.Component<NavBarProps, NavBarState> {
     // this.props.getUserSession()
     this.setState({ collapsed: !this.state.collapsed });
   }
+
+  logout() {
+    this.props.logout().then(() => {
+      this.props.history.replace("/");
+    });
+  }
   render() {
     const type = this.props.isSignedIn ? (
-      <Button label="Logout" />
+      <Button function={() => this.logout()} label="Logout" />
     ) : (
       <Button
         function={() => this.props.history.push("/sign_form")}
@@ -88,4 +95,4 @@ const mapStateToProps = (state) => ({
   isSignedIn: state.stateData.isSignedIn,
   user: state.stateData.USER,
 });
-export default connect(mapStateToProps, { getUserSession })(_NavBar);
+export default connect(mapStateToProps, { getUserSession, logout })(_NavBar);

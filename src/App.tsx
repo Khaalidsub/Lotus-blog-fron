@@ -35,9 +35,9 @@ class _App extends React.Component<AppProps, AppState> {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/blogs/posts" exact component={Posts} />
-              {this.props.isSignedIn && (
-                <Route path="/blogs/profile/:id" exact component={Profile} />
-              )}
+
+              <Route path="/blogs/profile/:id" exact component={Profile} />
+
               {this.props.isSignedIn && (
                 <Route
                   path="/blogs/profile/settings"
@@ -54,7 +54,15 @@ class _App extends React.Component<AppProps, AppState> {
                 <Route
                   path="/blogs/posts/add_post/:id"
                   // path="/blogs/posts/add_post"
-
+                  exact
+                  component={AddPost}
+                />
+              )}
+              {this.props.isSignedIn && (
+                <Route
+                  path="/blogs/posts/add_post"
+                  // path="/blogs/posts/add_post"
+                  exact
                   component={AddPost}
                 />
               )}

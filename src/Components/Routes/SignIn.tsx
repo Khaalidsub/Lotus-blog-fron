@@ -7,14 +7,20 @@ import { required, validEmail, minLength } from "../../utils/validators";
 import { signIn } from "../../store";
 import { connect } from "react-redux";
 import LoadingAnimation from "../Widgets/loadingAnimation";
-
+import { RouteComponentProps } from "react-router-dom";
+// interface SignInProps extends RouteComponentProps {
+//   signIn: (data: CredentialAction) => Promise<any>;
+// }
 class _SignIn extends React.Component<any, any> {
   state = { loading: false };
   async handleSubmit(user: CredentialAction) {
     console.log(this.props);
     this.setState({ loading: true });
-    await this.props.signIn(user);
+    const result = await this.props.signIn(user);
     this.setState({ loading: false });
+    if (result === true) {
+      this.props.history.replace("/");
+    }
   }
   render() {
     return (
