@@ -18,6 +18,9 @@ body,
 /* flex: 1;
 } */
 
+html {
+  background-color: var(--background-primary);
+}
 footer {
   margin-top: auto;
 }

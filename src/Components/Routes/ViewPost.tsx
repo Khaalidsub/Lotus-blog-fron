@@ -63,7 +63,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
           </div>
 
           <div className="view  font-hairline bg-secondary-background rounded-lg  shadow-xl pl-24 pr-24  pt-32 pb-32">
-            {this.props.post !== undefined && this.props.post.id && (
+            {this.props.post !== undefined && this.props.post.blocks && (
               <Output data={this.props.post} style={style} />
             )}
           </div>

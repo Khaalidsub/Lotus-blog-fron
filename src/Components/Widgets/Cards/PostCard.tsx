@@ -5,6 +5,7 @@ export interface CardProps {
   title: string;
   subtitle: string;
   image?: string;
+  info?: string;
 }
 
 export class PostCard extends React.Component<CardProps> {
@@ -20,7 +21,9 @@ export class PostCard extends React.Component<CardProps> {
           src={this.props.image}
           alt="Sunset in the mountains"
         />
+
         <div className="px-6 py-4">
+          <h4 className="text-primary">{this.props.info}</h4>
           <div className="font-bold text-xl mb-2 text-secondary">
             {this.props.title}
           </div>

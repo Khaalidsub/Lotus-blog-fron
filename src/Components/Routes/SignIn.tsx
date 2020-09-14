@@ -65,8 +65,9 @@ class _SignIn extends React.Component<any, any> {
               minLength: "Password Must be more than 6",
             }}
           />
-
-          <SubmitButton loading={this.state.loading} label="Sign In" />
+          <div className="text-center block w-full">
+            <SubmitButton loading={this.state.loading} label="Sign In" />
+          </div>
           <LoadingAnimation loading={this.state.loading} />
         </Form>
       </motion.div>

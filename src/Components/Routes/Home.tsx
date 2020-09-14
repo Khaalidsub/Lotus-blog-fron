@@ -16,9 +16,9 @@ import { fetchCollection } from "../../store";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { containerVariants } from "../../themes/motion";
-export interface AddPostProps extends RouteComponentProps {
+export interface HomeProps extends RouteComponentProps {
   posts: PostAction[];
   fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
 }
@@ -40,6 +40,7 @@ const FeauturedPost = (props: { post: PostAction }): JSX.Element => {
       <PostCard
         subtitle={props.post.subtitle}
         title={props.post.title}
+        info={"Feautured"}
         image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
       >
         <CategoryCard category={(props.post.category as CategoryAction).name} />
@@ -47,9 +48,24 @@ const FeauturedPost = (props: { post: PostAction }): JSX.Element => {
     </Link>
   );
 };
-class _Home extends React.Component<AddPostProps> {
+class _Home extends React.Component<HomeProps> {
+  state = { mainPosts: [] as PostAction[], chosenPost: {} as PostAction };
   componentDidMount() {
     this.props.fetchCollection("posts", dataTypes.post);
+  }
+  componentDidUpdate(prevProps: HomeProps) {
+    if (this.props !== prevProps && this.props.posts.length > 0) {
+      this.setState({
+        // mainPosts: this.props.posts.map((post, index) => {
+        //   if (index < 3) {
+        //     return post;
+        //   }
+
+        // }, index++),
+        mainPosts: this.props.posts.filter((_, i) => i! < 3),
+        chosenPost: this.props.posts[0],
+      });
+    }
   }
   renderLatestList(): JSX.Element[] | JSX.Element | undefined {
     // console.log("checking posts:", this.props.posts);
@@ -79,6 +95,34 @@ class _Home extends React.Component<AddPostProps> {
       }, index++);
     } else return <div></div>;
   }
+  renderMainPost = (): JSX.Element => {
+    return (
+      <AnimatePresence>
+        {this.state.chosenPost.id && (
+          <PostDescription post={this.state.chosenPost}>
+            <CategoryCard
+              category={(this.state.chosenPost.category as CategoryAction).name}
+            />
+          </PostDescription>
+        )}
+      </AnimatePresence>
+    );
+  };
+
+  renderMainPostList = (): JSX.Element[] | JSX.Element => {
+    return this.state.mainPosts.map((post) => (
+      <ImageCard
+        function={() =>
+          this.setState({
+            chosenPost: this.state.mainPosts.find(
+              (data) => data.id === post.id
+            ),
+          })
+        }
+        image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+      />
+    ));
+  };
 
   render() {
     return (
@@ -90,25 +134,10 @@ class _Home extends React.Component<AddPostProps> {
         className=""
       >
         <div className="relative">
-          <img
-            className="object-cover h-64 lg:h-76 w-full"
-            src="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-            alt=""
-          />
-          <div className="w-full absolute top-0  flex justify-center">
-            <PostDescription
-              subtitle="    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi magnam quis totam consequatur magni doloremque unde numquam laborum expedita. Quis, maiores. Laudantium enim tempore maxime voluptates nihil, officia sunt exercitationem."
-              title="Post title"
-            >
-              <CategoryCard category="programming" />
-            </PostDescription>
-          </div>
-
+          {this.renderMainPost()}
           <div className="w-full  absolute bottom-0 left-0 right-0">
             <div className=" flex flex-row justify-center">
-              <ImageCard image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80" />
-              <ImageCard image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80" />
-              <ImageCard image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80" />
+              {this.renderMainPostList()}
             </div>
           </div>
         </div>
@@ -124,13 +153,7 @@ class _Home extends React.Component<AddPostProps> {
               <PaginationButtons />
             )}
           </div>
-          <div className="mx-auto  ">
-            <h4 className="text-3xl italic text-tertiary text-center mb-16 mt-10 lg:mt-0">
-              Feautured Posts
-            </h4>
-
-            {this.renderFeatured()}
-          </div>
+          <div className="mx-auto  ">{this.renderFeatured()}</div>
         </div>
       </motion.div>
     );

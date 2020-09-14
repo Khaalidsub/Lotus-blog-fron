@@ -15,7 +15,8 @@ import { CombinedReducer, UserAction } from "./store/interface";
 import { connect } from "react-redux";
 import ErrorPage from "./Components/Routes/ErrorPage";
 import "./styles/app.css";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { containerVariants } from "./themes/motion";
 export interface AppProps extends RouteProps {
   isSignedIn: boolean;
   user: UserAction;
@@ -95,16 +96,23 @@ class _App extends React.Component<AppProps, AppState> {
 const addButton = (): JSX.Element => {
   return (
     <Link className="cursor-pointer" to="/blogs/posts/add_post">
-      <div className="md:hidden fixed bottom-0 z-20 right-0 p-5">
-        <div className="   border-4 border-primary  bg-secondary-background p-3 text-secondary rounded-full text-xl  text-center">
-          +
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <div className="md:hidden fixed bottom-0 z-20 right-0 p-5">
+          <div className="   border-4 border-primary  bg-secondary-background p-3 text-secondary rounded-full text-xl  text-center">
+            +
+          </div>
         </div>
-      </div>
-      <div className="md:block hidden fixed bottom-0 z-20 right-0 p-5">
-        <div className="border-2 border-primary  bg-secondary-background p-4 text-secondary rounded-full text-xl  text-center">
-          Add a new Post
+        <div className="md:block hidden fixed bottom-0 z-20 right-0 p-5">
+          <div className="border-2 border-primary  bg-secondary-background p-4 text-secondary rounded-full text-xl  text-center">
+            Add a new Post
+          </div>
         </div>
-      </div>
+      </motion.div>
     </Link>
   );
 };
