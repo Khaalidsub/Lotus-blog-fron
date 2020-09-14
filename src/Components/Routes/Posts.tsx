@@ -9,9 +9,11 @@ import {
   CategoryAction,
 } from "../../store/interface";
 import { fetchCollection } from "../../store";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
+import { motion } from "framer-motion";
+import { containerVariants } from "../../themes/motion";
 
 export interface PostsProps extends RouteComponentProps {
   posts: PostAction[];
@@ -23,15 +25,9 @@ enum searchType {
   user,
   category,
 }
-const SearcheddPost = (props: {
-  post: PostAction;
-  function: any;
-}): JSX.Element => {
+const SearcheddPost = (props: { post: PostAction }): JSX.Element => {
   return (
-    <div
-      className=" mx-auto hover:bg-negative cursor-pointer"
-      onClick={() => props.function(props.post.id)}
-    >
+    <Link to={`/blogs/posts/view_post/${props.post.id}`}>
       <PostCard
         subtitle={props.post.subtitle}
         title={props.post.title}
@@ -39,7 +35,7 @@ const SearcheddPost = (props: {
       >
         <CategoryCard category={(props.post.category as CategoryAction).name} />
       </PostCard>
-    </div>
+    </Link>
   );
 };
 class _Posts extends React.Component<PostsProps> {
@@ -56,20 +52,12 @@ class _Posts extends React.Component<PostsProps> {
       });
 
       return this.findSearchedResult().map((data) => {
-        return (
-          <SearcheddPost
-            function={(id: string) =>
-              this.props.history.push(`/blogs/posts/view_post/${id}`)
-            }
-            post={data}
-            key={data.id}
-          />
-        );
+        return <SearcheddPost post={data} key={data.id} />;
       });
     } else return <div></div>;
   }
   findSearchedResult = (): PostAction[] => {
-    console.log("checking type:", this.state.type);
+    // console.log("checking type:", this.state.type);
     switch (this.state.type) {
       case searchType.post:
         return this.props.posts.filter((post) =>
@@ -97,7 +85,13 @@ class _Posts extends React.Component<PostsProps> {
   };
   render() {
     return (
-      <div className="mx-12 my-12">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="mx-12 my-12"
+      >
         <div className="max-w-xl mx-auto">
           <div>
             <input
@@ -144,7 +138,7 @@ class _Posts extends React.Component<PostsProps> {
         <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2">
           {this.renderPosts()}
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

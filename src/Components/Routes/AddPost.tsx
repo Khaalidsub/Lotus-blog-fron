@@ -15,6 +15,8 @@ import SubmitButton from "../Widgets/Buttons/SubmitButton";
 import LoadingAnimation from "../Widgets/loadingAnimation";
 import { RouteComponentProps } from "react-router-dom";
 import NotifcationCard from "../Widgets/Cards/NotificationCard";
+import { motion } from "framer-motion";
+import { containerVariants } from "../../themes/motion";
 
 export interface AddPostProps extends RouteComponentProps<{ id: string }> {
   user: UserAction;
@@ -57,12 +59,6 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
         }),
       });
     }
-  }
-  // componentDidCatch() {
-  //   console.log("there is an error!");
-  // }
-  componentDidCatch(error: Error, ErrorInfo: React.ErrorInfo) {
-    console.log("there is an error!", error, ErrorInfo);
   }
 
   validatedData = (result: OutputData) => {
@@ -166,7 +162,12 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
   }
   render() {
     return (
-      <React.Fragment>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
         <NotifcationCard
           message={this.state.error}
           isShown={this.state.error.length > 0}
@@ -195,7 +196,7 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
             </div>
           </form>
         </div>
-      </React.Fragment>
+      </motion.div>
     );
   }
 }

@@ -16,6 +16,8 @@ import { fetchCollection } from "../../store";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
+import { motion } from "framer-motion";
+import { containerVariants } from "../../themes/motion";
 export interface AddPostProps extends RouteComponentProps {
   posts: PostAction[];
   fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
@@ -50,7 +52,7 @@ class _Home extends React.Component<AddPostProps> {
     this.props.fetchCollection("posts", dataTypes.post);
   }
   renderLatestList(): JSX.Element[] | JSX.Element | undefined {
-    console.log("checking posts:", this.props.posts);
+    // console.log("checking posts:", this.props.posts);
     if (this.props.posts !== undefined) {
       this.props.posts.map((post) => {
         post.title = post.title.replace(/&nbsp;/gi, "");
@@ -62,7 +64,7 @@ class _Home extends React.Component<AddPostProps> {
   }
 
   renderFeatured(): JSX.Element[] | JSX.Element {
-    console.log("checking posts:", this.props.posts);
+    // console.log("checking posts:", this.props.posts);
     if (this.props.posts !== undefined) {
       this.props.posts.map((post) => {
         post.title = post.title.replace(/&nbsp;/gi, "");
@@ -80,7 +82,13 @@ class _Home extends React.Component<AddPostProps> {
 
   render() {
     return (
-      <div className="">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className=""
+      >
         <div className="relative">
           <img
             className="object-cover h-64 lg:h-76 w-full"
@@ -124,7 +132,7 @@ class _Home extends React.Component<AddPostProps> {
             {this.renderFeatured()}
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

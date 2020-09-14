@@ -8,6 +8,8 @@ import { Link, RouteComponentProps } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
+import { motion } from "framer-motion";
+import { containerVariants } from "../../themes/motion";
 
 export interface ProfileProps extends RouteComponentProps<{ id: string }> {
   posts: PostAction[];
@@ -84,10 +86,6 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
     } else return <div></div>;
   }
 
-  componentWillUnmount() {
-    console.log("yooo i am unmounting");
-  }
-
   renderTypePost = (): PostAction[] => {
     switch (this.state.type) {
       case postType.written:
@@ -114,7 +112,13 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
   };
   render() {
     return (
-      <div className="mx-12 my-12">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        className="mx-12 my-12"
+      >
         <div className="max-w-lg mx-auto p-5 relative">
           <div className="bg-secondary-background border border-secondary flex flex-col lg:flex-row p-5 justify-between rounded">
             <h4 className="order-2 text-center lg:text-left text-secondary text-lg">
@@ -178,7 +182,7 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

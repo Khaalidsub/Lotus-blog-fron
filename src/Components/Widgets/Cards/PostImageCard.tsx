@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React from "react";
 import { Link } from "react-router-dom";
 import { PostAction } from "../../../store/interface";
@@ -10,7 +11,11 @@ export interface CardProps {
 export class PostImageCard extends React.Component<CardProps> {
   render() {
     return (
-      <div className="max-w-xl rounded lg:max-w-full lg:flex m-5 shadow-md">
+      <motion.div
+        initial={{ x: "-100vw" }}
+        animate={{ x: 0, transition: { delay: 0.9 } }}
+        className="max-w-xl rounded lg:max-w-full lg:flex m-5 shadow-md"
+      >
         <div
           className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
           style={{
@@ -39,7 +44,7 @@ export class PostImageCard extends React.Component<CardProps> {
             {this.props.children}
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

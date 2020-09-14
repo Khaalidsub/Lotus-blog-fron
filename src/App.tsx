@@ -1,7 +1,6 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Switch, Link } from "react-router-dom";
+import { Route, Switch, Link, RouteProps } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import Footer from "./Components/Footer";
 import Home from "./Components/Routes/Home";
 
 import Profile from "./Components/Routes/Profile";
@@ -16,7 +15,8 @@ import { CombinedReducer, UserAction } from "./store/interface";
 import { connect } from "react-redux";
 import ErrorPage from "./Components/Routes/ErrorPage";
 import "./styles/app.css";
-export interface AppProps {
+import { AnimatePresence } from "framer-motion";
+export interface AppProps extends RouteProps {
   isSignedIn: boolean;
   user: UserAction;
 }
@@ -25,58 +25,68 @@ export interface AppState {}
 
 class _App extends React.Component<AppProps, AppState> {
   render() {
+    console.log(this.props);
+
     return (
       <React.Fragment>
-        <Router>
-          <Route render={() => <Header user={this.props.user} />} />
+        <Header />
 
-          <Route component={NavBar} />
-          <div className="relative">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/blogs/posts" exact component={Posts} />
+        <Route component={NavBar} />
+        <div className="relative">
+          <Route
+            render={(props) => (
+              <AnimatePresence>
+                <Switch
+                  location={props.history.location}
+                  key={props.history.location.key}
+                >
+                  <Route path="/" strict exact component={Home} />
+                  <Route path="/blogs/posts" exact component={Posts} />
 
-              <Route path="/blogs/profile/:id" exact component={Profile} />
+                  <Route path="/blogs/profile/:id" exact component={Profile} />
 
-              {this.props.isSignedIn && (
-                <Route
-                  path="/blogs/profile/settings"
-                  exact
-                  component={EditProfile}
-                />
-              )}
-              <Route
-                path="/blogs/posts/view_post/:id"
-                exact
-                component={ViewPost}
-              />
-              {this.props.isSignedIn && (
-                <Route
-                  path="/blogs/posts/add_post/:id"
-                  // path="/blogs/posts/add_post"
-                  exact
-                  component={AddPost}
-                />
-              )}
-              {this.props.isSignedIn && (
-                <Route
-                  path="/blogs/posts/add_post"
-                  // path="/blogs/posts/add_post"
-                  exact
-                  component={AddPost}
-                />
-              )}
-              {!this.props.isSignedIn && (
-                <Route path="/sign_form" exact component={SignForm} />
-              )}
+                  {this.props.isSignedIn && (
+                    <Route
+                      path="/blogs/profile/settings"
+                      exact
+                      strict
+                      component={EditProfile}
+                    />
+                  )}
+                  <Route
+                    path="/blogs/posts/view_post/:id"
+                    exact
+                    component={ViewPost}
+                  />
+                  {this.props.isSignedIn && (
+                    <Route
+                      path="/blogs/posts/add_post/:id"
+                      // path="/blogs/posts/add_post"
+                      exact
+                      component={AddPost}
+                    />
+                  )}
+                  {this.props.isSignedIn && (
+                    <Route
+                      path="/blogs/posts/add_post"
+                      // path="/blogs/posts/add_post"
+                      exact
+                      component={AddPost}
+                    />
+                  )}
+                  {!this.props.isSignedIn && (
+                    <Route path="/sign_form" exact component={SignForm} />
+                  )}
 
-              <Route component={ErrorPage} />
-            </Switch>
-          </div>
-          {this.props.isSignedIn && <Route component={addButton} />}
+                  <Route component={ErrorPage} />
+                </Switch>
+              </AnimatePresence>
+            )}
+          />
+        </div>
+        {this.props.isSignedIn && <Route component={addButton} />}
 
-          {/* <Route component={Footer} /> */}
-        </Router>
+        {/* <Route component={Footer} /> */}
       </React.Fragment>
     );
   }

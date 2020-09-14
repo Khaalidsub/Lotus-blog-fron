@@ -2,22 +2,43 @@ import React from "react";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import { RouteComponentProps } from "react-router-dom";
+import NotifcationCard from "../Widgets/Cards/NotificationCard";
+import { motion } from "framer-motion";
+import { containerVariants } from "../../themes/motion";
 
 export interface SignFormProps extends RouteComponentProps {}
 
 export interface SignFormState {}
 
 class SignForm extends React.Component<SignFormProps, SignFormState> {
-  state = { type: "Register" };
+  state = { type: "Register", errorMessage: "" };
+
+  setMessage = (message: string) => {
+    this.setState({ errorMessage: message });
+  };
+  changePlace = () => {
+    this.props.history.replace("/", this.props.location.state);
+  };
   render() {
     const typeForm =
       this.state.type === "Register" ? (
-        <SignUp history={this.props.history} />
+        <SignUp setMessage={this.setMessage} history={this.changePlace} />
       ) : (
-        <SignIn history={this.props.history} />
+        <SignIn setMessage={this.setMessage} history={this.changePlace} />
       );
     return (
-      <div>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <NotifcationCard
+          isShown={this.state.errorMessage.length > 0}
+          message={this.state.errorMessage}
+          type={"negative"}
+          hide={() => this.setState({ errorMessage: "" })}
+        />
         <div className=" h-8 mx-auto mt-12 max-w-xs text-center grid grid-cols-2 bg-secondary-background rounded-full border border-primary">
           <button
             onClick={() => this.setState({ type: "Register" })}
@@ -40,7 +61,7 @@ class SignForm extends React.Component<SignFormProps, SignFormState> {
           </h3>
           {typeForm}
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

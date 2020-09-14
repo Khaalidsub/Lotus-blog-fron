@@ -4,6 +4,7 @@ import { getUserSession, logout } from "../store";
 import { connect } from "react-redux";
 import { UserAction } from "../store/interface";
 import { Link, RouteComponentProps } from "react-router-dom";
+import { motion } from "framer-motion";
 export interface NavBarProps extends RouteComponentProps {
   getUserSession: () => Promise<any>;
   user: UserAction;
@@ -40,7 +41,7 @@ class _NavBar extends React.Component<NavBarProps, NavBarState> {
     );
 
     return (
-      <div className="sticky top-0 z-50 bg-secondary-background">
+      <motion.div className="sticky top-0 z-50 bg-secondary-background">
         <nav className="flex  items-center justify-between flex-wrap  p-6 border border-solid border-black">
           <div className="flex items-center flex-shrink-0 text-primary mr-6">
             <span className="font-semibold text-xl tracking-tight ">
@@ -87,7 +88,7 @@ class _NavBar extends React.Component<NavBarProps, NavBarState> {
             <div>{type}</div>
           </div>
         </nav>
-      </div>
+      </motion.div>
     );
   }
 }

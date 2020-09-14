@@ -11,21 +11,16 @@ import {
 import { addUser } from "../../store";
 import { connect } from "react-redux";
 import LoadingAnimation from "../Widgets/loadingAnimation";
-import NotifcationCard from "../Widgets/Cards/NotificationCard";
+import { motion } from "framer-motion";
 class _SignUp extends React.Component<any, any> {
   state = {
     loading: false,
-
-    errorMessage: "",
-    typeError: "negative",
   };
   async handleSubmit(user: any) {
-    console.log(user);
+    // console.log(user);
     this.setState({ loading: true });
     if (user.password !== user.repeatPassword) {
-      this.setState({
-        errorMessage: "Password and ConfirmPassword are not the same",
-      });
+      this.props.setMessage("Password and ConfirmPassword are not the same");
       this.setState({ loading: false });
     } else {
       const result = await this.props.addUser({
@@ -34,20 +29,18 @@ class _SignUp extends React.Component<any, any> {
       });
       this.setState({ loading: false });
       if (result === true) {
-        this.props.history.replace("/");
+        this.props.history();
+      } else {
+        this.props.setMessage("Email already exists");
       }
     }
   }
   render() {
     return (
-      <React.Fragment>
-        <NotifcationCard
-          isShown={this.state.errorMessage.length > 0}
-          message={this.state.errorMessage}
-          type={this.state.typeError}
-          hide={() => this.setState({ errorMessage: "" })}
-        />
-
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.2 } }}
+      >
         <Form
           model="userRegister"
           onSubmit={(values) => this.handleSubmit(values)}
@@ -104,10 +97,11 @@ class _SignUp extends React.Component<any, any> {
               minLength: "Password Must be more than 6",
             }}
           />
+
           <SubmitButton loading={this.state.loading} label="Sign Up" />
           <LoadingAnimation loading={this.state.loading} />
         </Form>
-      </React.Fragment>
+      </motion.div>
     );
   }
 }

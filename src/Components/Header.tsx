@@ -7,13 +7,14 @@ import { getlocalStorage, setlocalStorage } from "../utils/localStorage";
 import "../styles/header.css";
 import { UserAction } from "../store/interface";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 export interface HeaderProps {
   user?: UserAction;
 }
 
 export interface HeaderState {}
 
-class Header extends React.Component<HeaderProps, HeaderState> {
+class _Header extends React.Component<HeaderProps, HeaderState> {
   state = {
     theme: DEFAULT_THEME,
     toggle: true,
@@ -84,4 +85,7 @@ const spring = {
   damping: 30,
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  user: state.stateData.USER,
+});
+export default connect(mapStateToProps, {})(_Header);

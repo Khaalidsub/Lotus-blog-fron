@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React from "react";
 
 export interface CardProps {
@@ -9,7 +10,11 @@ export interface CardProps {
 export class PostCard extends React.Component<CardProps> {
   render() {
     return (
-      <div className="max-w-sm rounded overflow-hidden shadow-lg m-5 bg-secondary-background">
+      <motion.div
+        initial={{ x: "100vw" }}
+        animate={{ x: 0, transition: { delay: 1 } }}
+        className="max-w-sm rounded overflow-hidden shadow-lg m-5 bg-secondary-background"
+      >
         <img
           className="w-full"
           src={this.props.image}
@@ -22,7 +27,7 @@ export class PostCard extends React.Component<CardProps> {
           <p className="text-tertiary text-base">{this.props.subtitle}</p>
         </div>
         <div className="px-6 pt-4 pb-2">{this.props.children}</div>
-      </div>
+      </motion.div>
     );
   }
 }

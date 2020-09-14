@@ -8,57 +8,68 @@ import { signIn } from "../../store";
 import { connect } from "react-redux";
 import LoadingAnimation from "../Widgets/loadingAnimation";
 import { RouteComponentProps } from "react-router-dom";
+import { motion } from "framer-motion";
 // interface SignInProps extends RouteComponentProps {
 //   signIn: (data: CredentialAction) => Promise<any>;
 // }
 class _SignIn extends React.Component<any, any> {
   state = { loading: false };
   async handleSubmit(user: CredentialAction) {
-    console.log(this.props);
+    // console.log(this.props);
     this.setState({ loading: true });
     const result = await this.props.signIn(user);
-    this.setState({ loading: false });
+
     if (result === true) {
-      this.props.history.replace("/");
+      // this.props.history.goBack();
+      this.props.history();
+      this.setState({ loading: false });
+    } else {
+      this.props.setMessage("email and/or password is incorrect!");
+      this.setState({ loading: false });
     }
   }
   render() {
     return (
-      <Form
-        model="userLogin"
-        onSubmit={(values) => this.handleSubmit(values)}
-        className=""
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.2 } }}
       >
-        <InputField
-          validators={{
-            required,
-            validEmail,
-          }}
-          error={{
-            required: "Requred",
-            validEmail: "Invalid Email",
-          }}
-          model="userLogin.email"
-          label="Email"
-          type="email"
-        />
-        <InputField
-          model="userLogin.password"
-          label="Password"
-          type="password"
-          validators={{
-            required,
-            minLength: minLength(6),
-          }}
-          error={{
-            required: "Requred",
-            minLength: "Password Must be more than 6",
-          }}
-        />
+        <Form
+          model="userLogin"
+          onSubmit={(values) => this.handleSubmit(values)}
+          className=""
+        >
+          <InputField
+            validators={{
+              required,
+              validEmail,
+            }}
+            error={{
+              required: "Requred",
+              validEmail: "Invalid Email",
+            }}
+            model="userLogin.email"
+            label="Email"
+            type="email"
+          />
+          <InputField
+            model="userLogin.password"
+            label="Password"
+            type="password"
+            validators={{
+              required,
+              minLength: minLength(6),
+            }}
+            error={{
+              required: "Requred",
+              minLength: "Password Must be more than 6",
+            }}
+          />
 
-        <SubmitButton loading={this.state.loading} label="Sign In" />
-        <LoadingAnimation loading={this.state.loading} />
-      </Form>
+          <SubmitButton loading={this.state.loading} label="Sign In" />
+          <LoadingAnimation loading={this.state.loading} />
+        </Form>
+      </motion.div>
     );
   }
 }

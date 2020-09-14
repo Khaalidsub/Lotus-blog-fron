@@ -6,6 +6,8 @@ import { PostAction, CombinedReducer, UserAction } from "../../store/interface";
 import { selectData } from "../../store";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { motion } from "framer-motion";
+import { containerVariants } from "../../themes/motion";
 export interface ViewPostProps extends RouteComponentProps<{ id: string }> {
   post: PostAction;
   selectPost: (url: string) => Promise<any>;
@@ -31,7 +33,13 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
   render() {
     if (!this.state.loading) {
       return (
-        <div className="relative max-w-4xl mt-5 mb-5 pt-10 pb-5 pl-3 pr-3 rounded-lg mx-auto">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="relative max-w-4xl mt-5 mb-5 pt-10 pb-5 pl-3 pr-3 rounded-lg mx-auto"
+        >
           <div className="absolute top-auto text-center h-20 w-full block">
             <div className="flex-col justify-center mt-3">
               <img
@@ -59,7 +67,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
               <Output data={this.props.post} style={style} />
             )}
           </div>
-        </div>
+        </motion.div>
       );
     }
     return <div></div>;

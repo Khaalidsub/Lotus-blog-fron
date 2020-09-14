@@ -9,6 +9,7 @@ import thunk from "redux-thunk";
 import { reducers } from "./store";
 import { Provider } from "react-redux";
 import { initialData } from "./store/reducers/initialData";
+import { BrowserRouter as Router } from "react-router-dom";
 declare global {
   interface Window {
     gapi: any;
@@ -26,7 +27,9 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </React.StrictMode>
   </Provider>,
   document.getElementById("root")
