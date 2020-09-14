@@ -2,7 +2,7 @@ import React, { FormEvent } from "react";
 import EditorJS, { OutputData } from "@editorjs/editorjs";
 import "../../styles/addPost.css";
 import { editorjsConfig } from "../../utils/config";
-import { addData, selectData, updateData } from "../../store";
+import { addData, selectData, updateData, fetchCollection } from "../../store";
 import {
   PostAction,
   CombinedReducer,
@@ -10,29 +10,27 @@ import {
   UserAction,
 } from "../../store/interface";
 import { connect } from "react-redux";
-import { dataTypes } from "../../store/types";
+import { data, dataTypes } from "../../store/types";
 import SubmitButton from "../Widgets/Buttons/SubmitButton";
 import LoadingAnimation from "../Widgets/loadingAnimation";
 import { RouteComponentProps } from "react-router-dom";
 import NotifcationCard from "../Widgets/Cards/NotificationCard";
 import { motion } from "framer-motion";
 import { containerVariants } from "../../themes/motion";
+import AddPostModal from "../Widgets/Modal";
 
 export interface AddPostProps extends RouteComponentProps<{ id: string }> {
   user: UserAction;
   category: CategoryAction[];
   prevPost: PostAction | OutputData;
-  addData: <PostAction>(
-    data: PostAction,
-    url: string,
-    dataTypes: dataTypes.post
-  ) => Promise<any>;
+  addData: (data: data, url: string, dataTypes: dataTypes) => Promise<any>;
   updateData: <PostAction>(
     data: PostAction,
     url: string,
     dataTypes: dataTypes.post
   ) => Promise<any>;
   selectData: (url: string) => Promise<any>;
+  fetchCollection: (url: string, dataTypes: dataTypes.category) => Promise<any>;
 }
 
 export interface AddPostState {}
@@ -44,6 +42,7 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     post: {} as PostAction,
     loading: false,
     subtitle: "",
+    isReady: false,
   };
   async componentDidMount() {
     if (!this.props.match.params.id) {
@@ -115,19 +114,11 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
         createdAt: new Date(),
         blocks: result.blocks,
         user: this.props.user.id,
-        category: this.props.category[0].id,
+        category: "",
       },
+      isReady: true,
     });
     // console.log("sending..", this.state.post);
-
-    const response = await this.props.addData(
-      this.state.post,
-      "posts/",
-      dataTypes.post
-    );
-    if (response === true) {
-      this.props.history.replace("/");
-    }
   };
   updatePost = async (result: OutputData) => {
     this.setState({
@@ -141,9 +132,9 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
         user: this.props.user.id,
         blocks: result.blocks,
       },
+      isReady: true,
     });
     // console.log("updating..", this.state.post);
-
     const response = await this.props.updateData(
       this.state.post,
       "posts/update",
@@ -160,6 +151,19 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     }
     return true;
   }
+
+  handleModalSubmit = async (categoryId: string) => {
+    const newPost = { ...this.state.post, category: categoryId } as PostAction;
+
+    const response = await this.props.addData(
+      newPost,
+      "posts/",
+      dataTypes.post
+    );
+    if (response === true) {
+      this.props.history.replace("/");
+    }
+  };
   render() {
     return (
       <motion.div
@@ -196,6 +200,15 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
             </div>
           </form>
         </div>
+        {this.state.isReady && (
+          <AddPostModal
+            addData={this.props.addData}
+            title="Add Category to your Article"
+            category={this.props.category || []}
+            fetchCollection={this.props.fetchCollection}
+            handleSubmit={this.handleModalSubmit}
+          />
+        )}
       </motion.div>
     );
   }
@@ -205,6 +218,9 @@ const mapStateToProps = (state: CombinedReducer) => ({
   category: state.modelData.CATEGORY,
   prevPost: state.modelData.SELECT,
 });
-export default connect(mapStateToProps, { addData, selectData, updateData })(
-  _AddPost
-);
+export default connect(mapStateToProps, {
+  addData,
+  selectData,
+  updateData,
+  fetchCollection,
+})(_AddPost);

@@ -11,9 +11,7 @@ export const initialData = {
   modelData: {
     [dataTypes.post]: [] as PostAction[],
 
-    [dataTypes.category]: [
-      { id: "5f2d1e270b0f544e0cd38ada", name: "Programming" },
-    ] as CategoryAction[],
+    [dataTypes.category]: [] as CategoryAction[],
 
     [dataTypes.user]: [] as UserAction[],
 
