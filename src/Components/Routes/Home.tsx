@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { containerVariants } from "../../themes/motion";
+import { format, compareAsc } from "date-fns";
 export interface HomeProps extends RouteComponentProps {
   posts: PostAction[];
   fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
@@ -55,6 +56,7 @@ class _Home extends React.Component<HomeProps> {
   }
   componentDidUpdate(prevProps: HomeProps) {
     if (this.props !== prevProps && this.props.posts.length > 0) {
+      const posts = this.props.posts.filter((_, i) => i! < 3);
       this.setState({
         // mainPosts: this.props.posts.map((post, index) => {
         //   if (index < 3) {
@@ -62,8 +64,8 @@ class _Home extends React.Component<HomeProps> {
         //   }
 
         // }, index++),
-        mainPosts: this.props.posts.filter((_, i) => i! < 3),
-        chosenPost: this.props.posts[0],
+        mainPosts: posts,
+        chosenPost: posts[0],
       });
     }
   }
@@ -88,16 +90,19 @@ class _Home extends React.Component<HomeProps> {
         return post;
       });
       let index = 0;
-      return this.props.posts.map((data, i) => {
-        if (i < 3) return <FeauturedPost post={data} key={data.id} />;
+      const latest = [...this.props.posts];
+      return latest
+        .sort((a, b) => (a.likes > b.likes ? -1 : 1))
+        .map((data, i) => {
+          if (i < 3) return <FeauturedPost post={data} key={data.id} />;
 
-        return <div></div>;
-      }, index++);
+          return <div></div>;
+        }, index++);
     } else return <div></div>;
   }
   renderMainPost = (): JSX.Element => {
     return (
-      <AnimatePresence>
+      <AnimatePresence key={this.state.chosenPost.id}>
         {this.state.chosenPost.id && (
           <PostDescription post={this.state.chosenPost}>
             <CategoryCard
@@ -120,6 +125,7 @@ class _Home extends React.Component<HomeProps> {
           })
         }
         image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+        key={post.id}
       />
     ));
   };
@@ -161,6 +167,8 @@ class _Home extends React.Component<HomeProps> {
 }
 
 const mapStateToProps = (state: CombinedReducer) => ({
-  posts: state.modelData.POST,
+  posts: state.modelData.POST.sort((a, b) =>
+    a.createdAt > b.createdAt ? -1 : 1
+  ),
 });
 export default connect(mapStateToProps, { fetchCollection })(_Home);

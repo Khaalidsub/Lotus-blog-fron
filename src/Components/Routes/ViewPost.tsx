@@ -83,6 +83,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
           animate="visible"
           exit="exit"
           className="relative max-w-4xl mt-5 mb-5 pt-10 pb-5 pl-3 pr-3 rounded-lg mx-auto"
+          key={this.props.post.id}
         >
           <div className="absolute z-10 top-auto text-center h-20 w-full block">
             <TopShareOptions

@@ -12,8 +12,8 @@ export const PostDescription: React.FC<PostDescriptionProps> = (props) => {
       <Link to={`/blogs/posts/view_post/${props.post.id}`}>
         <motion.img
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 1 } }}
-          exit={{ opacity: 0, transition: { delay: 1 } }}
+          animate={{ opacity: 1, transition: { delay: 0.3 } }}
+          exit={{ opacity: 0, transition: { delay: 0.5 } }}
           className="object-cover h-64 lg:h-76 w-full"
           src={
             props.post.image ||
@@ -23,8 +23,8 @@ export const PostDescription: React.FC<PostDescriptionProps> = (props) => {
         />
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 1 } }}
-          exit={{ opacity: 0, transition: { delay: 1 } }}
+          animate={{ opacity: 1, transition: { delay: 0.4 } }}
+          exit={{ opacity: 0, transition: { delay: 0.5 } }}
           className="w-full absolute top-0  flex justify-center"
         >
           <div className="lg:bg-secondary-background max-w-xs lg:border  lg:border-yellow-800  rounded overflow-hidden shadow-lg m-5">

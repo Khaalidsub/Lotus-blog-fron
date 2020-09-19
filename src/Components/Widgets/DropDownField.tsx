@@ -20,7 +20,9 @@ class DropDownField extends React.Component<DropDownFieldProps, any> {
           className="g-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
         >
           {this.props.list.map((item) => (
-            <option value={item.name}> {item.name}</option>
+            <option key={item.id} value={item.name}>
+              {item.name}
+            </option>
           ))}
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">

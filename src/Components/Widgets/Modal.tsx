@@ -16,7 +16,7 @@ export interface AddPostModalProps {
   fetchCollection: (url: string, dataTypes: dataTypes.category) => Promise<any>;
   title: string;
   category: CategoryAction[];
-  handleSubmit: (categoryId: string) => void;
+  handleSubmit: (categoryId?: string) => void;
   addData: <CategoryAction>(
     data: CategoryAction,
     url: string,
@@ -97,6 +97,12 @@ class AddPostModal extends React.Component<
           animate="visible"
         >
           <div className=" bg-white border rounded-lg border-primary  p-6 ">
+            <p
+              className="text-right text-red-700 cursor-pointer text-lg p-2"
+              onClick={() => this.props.handleSubmit()}
+            >
+              X
+            </p>
             <h4 className="text-center text-lg mb-10">{this.props.title}</h4>
 
             <form onSubmit={this.handleSubmit}>

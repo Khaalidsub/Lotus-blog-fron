@@ -152,16 +152,23 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     return true;
   }
 
-  handleModalSubmit = async (categoryId: string) => {
-    const newPost = { ...this.state.post, category: categoryId } as PostAction;
+  handleModalSubmit = async (categoryId?: string) => {
+    if (categoryId) {
+      const newPost = {
+        ...this.state.post,
+        category: categoryId,
+      } as PostAction;
 
-    const response = await this.props.addData(
-      newPost,
-      "posts/",
-      dataTypes.post
-    );
-    if (response === true) {
-      this.props.history.replace("/");
+      const response = await this.props.addData(
+        newPost,
+        "posts/",
+        dataTypes.post
+      );
+      if (response === true) {
+        this.props.history.replace("/");
+      }
+    } else {
+      this.setState({ isReady: false });
     }
   };
   render() {

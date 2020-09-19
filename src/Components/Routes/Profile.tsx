@@ -96,16 +96,14 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
         );
       case postType.liked:
         return this.props.posts.filter((post) =>
-          ((this.props.userProfile as UserAction)
-            .likedPosts as PostAction[])?.find(
-            (likedPost) => likedPost.id === post.id
+          (this.props.userProfile as UserAction).likedPosts?.find(
+            (likedPost) => likedPost === post.id
           )
         );
       case postType.booked:
         return this.props.posts.filter((post) =>
-          ((this.props.userProfile as UserAction)
-            .bookMarkedPosts as PostAction[])?.find(
-            (bookedPost) => bookedPost.id === post.id
+          this.props.user.bookMarkedPosts.find(
+            (bookedPost) => bookedPost === post.id
           )
         );
     }

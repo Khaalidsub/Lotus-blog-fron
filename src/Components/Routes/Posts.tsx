@@ -145,6 +145,8 @@ class _Posts extends React.Component<PostsProps> {
 
 // export default Posts;
 const mapStateToProps = (state: CombinedReducer) => ({
-  posts: state.modelData.POST,
+  posts: state.modelData.POST.sort((a, b) =>
+    a.createdAt > b.createdAt ? -1 : 1
+  ),
 });
 export default connect(mapStateToProps, { fetchCollection })(_Posts);
