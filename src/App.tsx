@@ -17,6 +17,12 @@ import ErrorPage from "./Components/Routes/ErrorPage";
 import "./styles/app.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { containerVariants } from "./themes/motion";
+import { library } from "@fortawesome/fontawesome-svg-core";
+// import { fab } from "@fortawesome/free-brands-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { faBookmark, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+
+library.add(far, faBookmark, faThumbsUp);
 export interface AppProps extends RouteProps {
   isSignedIn: boolean;
   user: UserAction;

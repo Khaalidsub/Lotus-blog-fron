@@ -8,8 +8,9 @@ export const addUser = (user: UserAction) => async (
   dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
   try {
-    await lotusApi.post("/signup", user);
+    const response = await lotusApi.post("/signup", user);
     // dispatch(registering(response.data));
+    localStorage.setItem("token", response.data);
     dispatch(getUserSession());
     return true;
   } catch (error) {
@@ -25,7 +26,7 @@ export const signIn = (user: CredentialAction) => async (
     console.log("in signing action", user);
 
     const response = await lotusApi.post("/login", user);
-    console.log("in login", response, response.headers);
+    // console.log("in login", response, response.headers);
 
     localStorage.setItem("token", response.data);
 

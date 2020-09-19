@@ -6,9 +6,12 @@ import {
   editing,
   deleting,
   selecting,
+  toggling,
 } from "./dispatchTypes";
 import { ThunkDispatch } from "redux-thunk";
 import { dataTypes, data } from "../types";
+import { PostAction } from "../interface";
+import { getUserSession } from "./authActions";
 const auth = "Bearer ";
 export const addData = <T>(
   data: data,
@@ -93,6 +96,26 @@ export const selectData = <T>(url: string) => async (
     console.log("getting posts", response);
 
     dispatch(selecting<T>(response.data));
+  } catch (error) {
+    console.log(error);
+
+    return error;
+  }
+};
+export const toggle = (typeToggle: string, id: string) => async (
+  dispatch: ThunkDispatch<{}, {}, AnyAction>
+) => {
+  try {
+    const result = await lotusApi.patch(
+      `/${typeToggle}/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: auth + localStorage.getItem("token"),
+        },
+      }
+    );
+    dispatch(toggling<PostAction>(result.data));
   } catch (error) {
     console.log(error);
 

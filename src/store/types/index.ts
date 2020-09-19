@@ -11,6 +11,7 @@ export enum ModelActions {
   edit = "EDIT", //edit one model
   delete = "DELETE", //delete a model
   add = "ADD", //add a new data
+  toggle = "TOGGLE",
 }
 export enum AuthActions {
   login = "LOGIN", //login

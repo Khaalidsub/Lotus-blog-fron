@@ -5,6 +5,7 @@ import {
   fetchCollection,
   selectData,
   updateData,
+  toggle,
 } from "./modelActions";
 export {
   addUser,
@@ -16,4 +17,5 @@ export {
   fetchCollection,
   selectData,
   updateData,
+  toggle,
 };

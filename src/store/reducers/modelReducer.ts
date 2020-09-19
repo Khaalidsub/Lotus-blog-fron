@@ -39,6 +39,11 @@ export default (
           data.id === (action.payload as IModel).id ? action.payload : data
         ),
       };
+    case ModelActions.toggle:
+      return {
+        ...storeData,
+        [action.dataType]: action.payload,
+      };
     default:
       return storeData || initialData.modelData;
   }

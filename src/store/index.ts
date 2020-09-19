@@ -9,6 +9,7 @@ import {
   selectData,
   fetchCollection,
   deleteData,
+  toggle,
 } from "./actions";
 
 export {
@@ -22,4 +23,5 @@ export {
   selectData,
   fetchCollection,
   deleteData,
+  toggle,
 };

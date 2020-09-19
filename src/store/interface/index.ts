@@ -20,6 +20,8 @@ export interface PostAction extends IModel {
   category?: CategoryAction | string;
   user?: UserAction | string;
   image?: string;
+  likes: number;
+  bookMarks: number;
 }
 
 export interface CategoryAction extends IModel {
@@ -35,8 +37,9 @@ export interface CredentialAction {
 export interface UserAction extends CredentialAction, IModel {
   id?: string;
   name: string;
-  likedPosts: PostAction[] | string;
-  bookMarkedPosts: PostAction[] | string;
+  likedPosts: PostAction[] | string[];
+  bookMarkedPosts: PostAction[] | string[];
+
   image?: string;
 }
 

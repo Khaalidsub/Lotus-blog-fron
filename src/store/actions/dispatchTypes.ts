@@ -1,5 +1,12 @@
-import { dataTypes, ModelActions, AuthActions } from "../types";
+import { dataTypes, ModelActions, AuthActions, data } from "../types";
 import { Action, UserAction, AuthAction } from "../interface";
+
+//toggle
+export const toggling = <T>(data: data): Action<T> => ({
+  type: ModelActions.select,
+  dataType: dataTypes.select,
+  payload: data,
+});
 
 //model
 export const selecting = <T>(data: T): Action<T> => ({
