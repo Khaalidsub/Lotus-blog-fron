@@ -11,7 +11,6 @@ import {
 import { ThunkDispatch } from "redux-thunk";
 import { dataTypes, data } from "../types";
 import { PostAction } from "../interface";
-import { getUserSession } from "./authActions";
 const auth = "Bearer ";
 export const addData = <T>(
   data: data,
@@ -73,7 +72,7 @@ export const deleteData = <T>(
   dataTypes: dataTypes
 ) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   try {
-    const response = await lotusApi.delete(`/${url}`, {
+    await lotusApi.delete(`/${url}`, {
       headers: {
         Authorization: auth + localStorage.getItem("token"),
       },

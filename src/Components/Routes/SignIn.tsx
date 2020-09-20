@@ -7,7 +7,6 @@ import { required, validEmail, minLength } from "../../utils/validators";
 import { signIn } from "../../store";
 import { connect } from "react-redux";
 import LoadingAnimation from "../Widgets/loadingAnimation";
-import { RouteComponentProps } from "react-router-dom";
 import { motion } from "framer-motion";
 // interface SignInProps extends RouteComponentProps {
 //   signIn: (data: CredentialAction) => Promise<any>;

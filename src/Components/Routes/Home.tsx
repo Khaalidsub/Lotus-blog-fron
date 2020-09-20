@@ -18,7 +18,6 @@ import { connect } from "react-redux";
 import { dataTypes } from "../../store/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { containerVariants } from "../../themes/motion";
-import { format, compareAsc } from "date-fns";
 export interface HomeProps extends RouteComponentProps {
   posts: PostAction[];
   fetchCollection: (url: string, dataTypes: dataTypes.post) => Promise<any>;
