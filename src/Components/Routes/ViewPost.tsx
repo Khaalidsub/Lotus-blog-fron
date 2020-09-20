@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { motion } from "framer-motion";
 import { containerVariants } from "../../themes/motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { format } from "date-fns";
 export interface ViewPostProps extends RouteComponentProps<{ id: string }> {
   post: PostAction;
   user: UserAction;
@@ -33,7 +34,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
       prevProps.user !== this.props.user
     ) {
       this.setState({ loading: false });
-      if (this.props.user) {
+      if (this.props.user.id) {
         const isLiked =
           (this.props.user.likedPosts as string[]).find(
             (id) => id === this.props.post.id
@@ -59,7 +60,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
     }
   }
   toogleLike = async () => {
-    if (this.props.user && !this.state.toggling) {
+    if (this.props.user.id && !this.state.toggling) {
       this.setState({ toggling: true });
       await this.props.toggle("like", this.props.match.params.id);
 
@@ -67,7 +68,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
     }
   };
   toogleBook = async () => {
-    if (this.props.user && !this.state.toggling) {
+    if (this.props.user.id && !this.state.toggling) {
       this.setState({ toggling: true });
       await this.props.toggle("bookmark", this.props.match.params.id);
 
@@ -109,12 +110,15 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
                     {(this.props.post.user as UserAction)?.name}
                   </p>
                 </Link>
-                <p className="text-gray-600">Aug 18</p>
+                <p className="text-gray-600">
+                  {this.props.post.createdAt &&
+                    format(new Date(this.props.post.createdAt), "PPPP")}
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="view  relative font-hairline bg-secondary-background rounded-lg  shadow-xl pl-24 pr-24  pt-56 pb-48">
+          <div className="view  relative font-hairline bg-secondary-background rounded-lg  shadow-xl pl-12 md:pl-24 pr-12 md:pr-24  pt-56 pb-48">
             {this.props.post !== undefined && this.props.post.blocks && (
               <Output data={this.props.post} style={style} />
             )}

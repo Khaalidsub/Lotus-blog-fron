@@ -42,7 +42,10 @@ const FeauturedPost = (props: { post: PostAction }): JSX.Element => {
         subtitle={props.post.subtitle}
         title={props.post.title}
         info={"Feautured"}
-        image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+        image={
+          props.post.image ||
+          "https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+        }
       >
         <CategoryCard category={(props.post.category as CategoryAction).name} />
       </PostCard>
@@ -58,12 +61,6 @@ class _Home extends React.Component<HomeProps> {
     if (this.props !== prevProps && this.props.posts.length > 0) {
       const posts = this.props.posts.filter((_, i) => i! < 3);
       this.setState({
-        // mainPosts: this.props.posts.map((post, index) => {
-        //   if (index < 3) {
-        //     return post;
-        //   }
-
-        // }, index++),
         mainPosts: posts,
         chosenPost: posts[0],
       });
@@ -124,7 +121,10 @@ class _Home extends React.Component<HomeProps> {
             ),
           })
         }
-        image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+        image={
+          post.image ||
+          "https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+        }
         key={post.id}
       />
     ));

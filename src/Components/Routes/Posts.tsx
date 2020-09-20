@@ -31,7 +31,10 @@ const SearcheddPost = (props: { post: PostAction }): JSX.Element => {
       <PostCard
         subtitle={props.post.subtitle}
         title={props.post.title}
-        image="https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+        image={
+          props.post.image ||
+          "https://images.unsplash.com/photo-1541250628459-d8f2f0157289?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjQzMzEwfQ&auto=format&fit=crop&w=1350&q=80"
+        }
       >
         <CategoryCard category={(props.post.category as CategoryAction).name} />
       </PostCard>

@@ -111,10 +111,10 @@ export const postSample = {
 
 export const style = {
   header: {
-    fontFamily: "'Amiri', serif",
+    fontFamily: "'Roboto', sans-serif",
   },
   paragraph: {
-    fontFamily: "'Lora', serif",
+    fontFamily: "'Rubik', sans-serif",
     color: "var(--color-secondary)",
   },
   list: {

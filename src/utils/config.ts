@@ -7,6 +7,7 @@ import Paragraph from "@editorjs/paragraph";
 import Code from "@editorjs/code";
 import Marker from "@editorjs/marker";
 import Checklist from "@editorjs/checklist";
+import { localhost } from "../api";
 
 export const editorjsConfig = {
   // holder: "editorjs",
@@ -56,6 +57,11 @@ export const editorjsConfig = {
     image: {
       class: Image,
       inlineToolbar: true,
+      config: {
+        endpoints: {
+          byFile: localhost + "/file/upload",
+        },
+      },
     },
   },
 };

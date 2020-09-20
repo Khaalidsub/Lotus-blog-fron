@@ -17,9 +17,9 @@ export class PostCard extends React.Component<CardProps> {
         className="max-w-sm rounded overflow-hidden shadow-lg m-5 bg-secondary-background"
       >
         <img
-          className="w-full"
+          className="w-ful l bg-contain"
           src={this.props.image}
-          alt="Sunset in the mountains"
+          alt={this.props.title}
         />
 
         <div className="px-6 py-4">

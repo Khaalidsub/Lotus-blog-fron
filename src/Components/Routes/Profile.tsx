@@ -185,7 +185,9 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
   }
 }
 const mapStateToProps = (state: CombinedReducer) => ({
-  posts: state.modelData.POST,
+  posts: state.modelData.POST.sort((a, b) =>
+    a.createdAt > b.createdAt ? -1 : 1
+  ),
   user: state.stateData.USER,
   userProfile: state.modelData.SELECT,
 });

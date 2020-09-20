@@ -44,9 +44,11 @@ class _NavBar extends React.Component<NavBarProps, NavBarState> {
       <motion.div className="sticky top-0 z-40 bg-secondary-background">
         <nav className="flex  items-center justify-between flex-wrap  p-6 border border-solid border-black">
           <div className="flex items-center flex-shrink-0 text-primary mr-6">
-            <span className="font-semibold text-xl tracking-tight ">
-              LOTUS BLOGS
-            </span>
+            <Link to={"/"}>
+              <span className="font-semibold text-xl tracking-tight ">
+                LOTUS BLOGS
+              </span>
+            </Link>
           </div>
           <div className="block lg:hidden">
             <button

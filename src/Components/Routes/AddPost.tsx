@@ -107,6 +107,8 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
   };
 
   addPost = async (result: OutputData) => {
+    const image = result.blocks.find((block) => block.type === "image");
+
     this.setState({
       post: {
         title: result.blocks[0]?.data.text,
@@ -115,6 +117,7 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
         blocks: result.blocks,
         user: this.props.user.id,
         category: "",
+        image: image?.data?.file?.url || "",
       },
       isReady: true,
     });

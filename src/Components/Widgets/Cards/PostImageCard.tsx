@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import React from "react";
 import { Link } from "react-router-dom";
 import { PostAction } from "../../../store/interface";
-
+import { format } from "date-fns";
 export interface CardProps {
   post: PostAction;
   info?: string;
@@ -42,6 +42,10 @@ export class PostImageCard extends React.Component<CardProps> {
           </Link>
           <div className="flex flex-wrap justify-start">
             {this.props.children}
+            <p className="text-gray-600">
+              {this.props.post.createdAt &&
+                format(new Date(this.props.post.createdAt), "PP")}
+            </p>
           </div>
         </div>
       </motion.div>
