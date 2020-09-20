@@ -7,7 +7,7 @@ export const localhost = "http://10.100.16.37:8083/blog";
 // export const localhost = "http://192.168.0.15:8083/blog";
 export const cookie = "app=";
 const axios = Axios.create({
-  baseURL: localhost,
+  baseURL: server,
   // headers: {
   //   Authorization: cookie,
   // },
