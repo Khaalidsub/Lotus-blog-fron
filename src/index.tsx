@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./styles/index.css";
 import "./styles/font.css";
 import App from "./App";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
 import { reducers } from "./store";
@@ -18,11 +18,12 @@ declare global {
 }
 
 const middleWare = [thunk];
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducers,
   initialData,
-  composeEnhancers(applyMiddleware(...middleWare))
+  applyMiddleware(...middleWare)
+  // composeEnhancers(applyMiddleware(...middleWare))
 );
 ReactDOM.render(
   <Provider store={store}>

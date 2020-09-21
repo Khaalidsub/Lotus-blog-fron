@@ -34,7 +34,7 @@ class _Header extends React.Component<HeaderProps, HeaderState> {
       theme: toggling ? "default" : "dark",
       toggle: toggling,
     });
-    console.log(this.state.theme, this.state.toggle, toggling);
+    // console.log(this.state.theme, this.state.toggle, toggling);
 
     applyTheme(this.state.theme);
     await setlocalStorage("theme", this.state.theme);

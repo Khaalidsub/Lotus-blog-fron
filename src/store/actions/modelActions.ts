@@ -28,7 +28,7 @@ export const addData = <T>(
     dispatch(adding<T>(response.data, dataTypes));
     return true;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
@@ -41,7 +41,7 @@ export const fetchCollection = <T>(url: string, dataTypes: dataTypes) => async (
     // dispatch(registering(response.data));
     dispatch(fetching<T>(response.data, dataTypes));
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
@@ -61,7 +61,7 @@ export const updateData = <T>(
     dispatch(editing<T>(response.data, dataTypes));
     return true;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
@@ -81,7 +81,7 @@ export const deleteData = <T>(
     dispatch(deleting<T>(data, dataTypes));
     return true;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
@@ -92,11 +92,11 @@ export const selectData = <T>(url: string) => async (
   try {
     const response = await lotusApi.get(`/${url}`);
     // dispatch(registering(response.data));
-    console.log("getting posts", response);
+    // console.log("getting posts", response);
 
     dispatch(selecting<T>(response.data));
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
@@ -116,7 +116,7 @@ export const toggle = (typeToggle: string, id: string) => async (
     );
     dispatch(toggling<PostAction>(result.data));
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }

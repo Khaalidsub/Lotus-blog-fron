@@ -20,7 +20,7 @@ class _NavBar extends React.Component<NavBarProps, NavBarState> {
     this.props.getUserSession();
   }
   setNav() {
-    console.log("collapse", this.state);
+    // console.log("collapse", this.state);
     // this.props.getUserSession()
     this.setState({ collapsed: !this.state.collapsed });
   }

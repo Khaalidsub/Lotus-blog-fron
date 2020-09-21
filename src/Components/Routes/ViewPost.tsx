@@ -118,7 +118,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
             </div>
           </div>
 
-          <div className="view  relative font-hairline bg-secondary-background rounded-lg  shadow-xl pl-12 md:pl-24 pr-12 md:pr-24  pt-56 pb-48">
+          <div className="view  relative font-hairline bg-secondary-background rounded-lg  shadow-xl pl-6 md:pl-24 pr-6yarn md:pr-24  pt-56 pb-48">
             {this.props.post !== undefined && this.props.post.blocks && (
               <Output data={this.props.post} style={style} />
             )}
@@ -145,31 +145,33 @@ const TopShareOptions = (props: {
   toogleLike: () => void;
 }) => {
   return (
-    <div className="max-w-md p-5  border-secondary border-2 mx-auto  text-secondary rounded-b-full rounded-t-lg shadow-lg">
-      <div className=" flex flex-row justify-evenly items-stretch">
-        <div className="flex flex-col text-center justify-between items-center mr-3">
-          <div>
-            <FontAwesomeIcon
-              icon="thumbs-up"
-              className={`cursor-pointer mr-2   ${
-                props.isLiked ? "text-primary" : "text-secondary"
-              }`}
-              onClick={() => props.toogleLike()}
-            />
-            {props.likes}
-          </div>
+    <div className=" top-0 left-0 right-0">
+      <div className="max-w-sm md:max-w-md p-5  border-secondary border-2 mx-auto  text-secondary rounded-b-full rounded-t-lg shadow-lg">
+        <div className=" flex flex-row justify-evenly items-stretch">
+          <div className="flex flex-col text-center justify-between items-center mr-3">
+            <div>
+              <FontAwesomeIcon
+                icon="thumbs-up"
+                className={`cursor-pointer mr-2   ${
+                  props.isLiked ? "text-primary" : "text-secondary"
+                }`}
+                onClick={() => props.toogleLike()}
+              />
+              {props.likes}
+            </div>
 
-          <p className="mt-2">Like</p>
-        </div>
-        <div className="flex flex-col items-center ml-2 justify-between">
-          <FontAwesomeIcon
-            icon="bookmark"
-            className={`cursor-pointer   ${
-              props.isBookMarked ? "text-primary" : "text-secondary"
-            }`}
-            onClick={() => props.toogleBookMark()}
-          />
-          <p className="mt-2">BookMark</p>
+            <p className="mt-2">Like</p>
+          </div>
+          <div className="flex flex-col items-center ml-2 justify-between">
+            <FontAwesomeIcon
+              icon="bookmark"
+              className={`cursor-pointer   ${
+                props.isBookMarked ? "text-primary" : "text-secondary"
+              }`}
+              onClick={() => props.toogleBookMark()}
+            />
+            <p className="mt-2">BookMark</p>
+          </div>
         </div>
       </div>
     </div>

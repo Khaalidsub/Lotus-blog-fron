@@ -14,7 +14,7 @@ export const addUser = (user: UserAction) => async (
     dispatch(getUserSession());
     return true;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
@@ -23,7 +23,7 @@ export const signIn = (user: CredentialAction) => async (
   dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
   try {
-    console.log("in signing action", user);
+    // console.log("in signing action", user);
 
     const response = await lotusApi.post("/login", user);
     // console.log("in login", response, response.headers);
@@ -33,7 +33,7 @@ export const signIn = (user: CredentialAction) => async (
     dispatch(getUserSession());
     return true;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
@@ -45,11 +45,11 @@ export const getUserSession = () => async (dispatch: Dispatch) => {
         Authorization: auth + localStorage.getItem("token"),
       },
     });
-    console.log("response session", response, response.config);
+    // console.log("response session", response, response.config);
 
     dispatch(authenticating(response.data));
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
@@ -60,7 +60,7 @@ export const logout = () => async (dispatch: Dispatch) => {
     dispatch(loggingOut());
     localStorage.setItem("token", "");
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return error;
   }
