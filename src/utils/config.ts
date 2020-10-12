@@ -7,8 +7,10 @@ import Paragraph from "@editorjs/paragraph";
 import Code from "@editorjs/code";
 import Marker from "@editorjs/marker";
 import Checklist from "@editorjs/checklist";
-import { localhost } from "../api";
-
+import { localhost, server } from "../api";
+import lotusApi from "../api";
+import * as ajax from "ajax";
+import { da } from "date-fns/locale";
 export const editorjsConfig = {
   // holder: "editorjs",
   minHeight: 150,
@@ -59,7 +61,11 @@ export const editorjsConfig = {
       inlineToolbar: true,
       config: {
         endpoints: {
-          byFile: localhost + "/file/upload",
+          byFile: server + "/file/upload",
+        },
+        additionalRequestHeaders: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Access-Control-Allow-Credentials": true,
         },
       },
     },

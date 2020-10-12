@@ -32,7 +32,7 @@ export interface AppState {}
 
 class _App extends React.Component<AppProps, AppState> {
   render() {
-    console.log(this.props);
+    // console.log(this.props);
 
     return (
       <React.Fragment>

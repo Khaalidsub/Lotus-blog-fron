@@ -120,13 +120,16 @@ class _Profile extends React.Component<ProfileProps, ProfileState> {
         <div className="max-w-lg mx-auto p-5 relative">
           <div className="bg-secondary-background border border-secondary flex flex-col lg:flex-row p-5 justify-between rounded">
             <h4 className="order-2 text-center lg:text-left text-secondary text-lg">
-              Khaalid Subaan
+              {this.props.userProfile.name}
             </h4>
             <div className="lg:absolute pb-4 top-0 left-0 order-first right-0 w-full ">
               <img
                 className="w-16 h-16 rounded-full mx-auto "
-                src="https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                alt="Avatar of Jonathan Reinink"
+                src={
+                  this.props.userProfile.image ||
+                  "https://images.unsplash.com/photo-1541332246502-2e99eaa96cc1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                }
+                alt={`Avatar of ${this.props.userProfile.name}`}
               />
             </div>
 
