@@ -7,10 +7,7 @@ import Paragraph from "@editorjs/paragraph";
 import Code from "@editorjs/code";
 import Marker from "@editorjs/marker";
 import Checklist from "@editorjs/checklist";
-import { localhost, server } from "../api";
-import lotusApi from "../api";
-import * as ajax from "ajax";
-import { da } from "date-fns/locale";
+import { server } from "../api";
 export const editorjsConfig = {
   // holder: "editorjs",
   minHeight: 150,
