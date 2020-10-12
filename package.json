@@ -58,7 +58,7 @@
   "scripts": {
     "watch:css": "postcss src/postcss/tailwind.css -o src/styles/index.css -w",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && echo '/* /index.html 200' | cat >build/_redirects ",
     "eject": "react-scripts eject",
     "build:styles": "postcss src/postcss/tailwind.css -o src/styles/index.css",
     "prebuild": "npm run build:styles"
