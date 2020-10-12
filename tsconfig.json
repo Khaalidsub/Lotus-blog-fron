@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowUnusedLabels": true,
-  
+  "importsNotUsedAsValues": "preserve",
     "noImplicitAny": false,
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -14,7 +14,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noEmit": true,
     "jsx": "react"
   },
