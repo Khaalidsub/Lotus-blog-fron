@@ -9,6 +9,7 @@ import {
   toggling,
 } from "./dispatchTypes";
 import { ThunkDispatch } from "redux-thunk";
+//@ts-ignore
 import { dataTypes, data } from "../types";
 import { PostAction } from "../interface";
 const auth = "Bearer ";
