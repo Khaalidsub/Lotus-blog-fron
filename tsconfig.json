@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowUnusedLabels": true,
-  "importsNotUsedAsValues": "preserve",
+
     "noImplicitAny": false,
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -9,9 +9,10 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
+    
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,
