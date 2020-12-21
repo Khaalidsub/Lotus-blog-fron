@@ -114,7 +114,7 @@ export const style = {
     fontFamily: "'Roboto', sans-serif",
   },
   paragraph: {
-    fontFamily: "'Rubik', sans-serif",
+    fontFamily: "'Roboto', sans-serif",
     color: "var(--color-secondary)",
   },
   list: {
