@@ -19,7 +19,7 @@ export const addData = <T>(
   dataTypes: dataTypes
 ) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   try {
-    const response = await lotusApi.post(`/${url}`, data, {
+    const response = await lotusApi.post(`/api/blog/${url}`, data, {
       headers: {
         Authorization: auth + localStorage.getItem("token"),
       },
@@ -38,7 +38,7 @@ export const fetchCollection = <T>(url: string, dataTypes: dataTypes) => async (
   dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
   try {
-    const response = await lotusApi.get(`/${url}`);
+    const response = await lotusApi.get(`/api/blog/${url}`);
     // dispatch(registering(response.data));
     dispatch(fetching<T>(response.data, dataTypes));
   } catch (error) {
@@ -53,7 +53,7 @@ export const updateData = <T>(
   dataTypes: dataTypes
 ) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   try {
-    const response = await lotusApi.put(`/${url}`, data, {
+    const response = await lotusApi.put(`/api/blog/${url}`, data, {
       headers: {
         Authorization: auth + localStorage.getItem("token"),
       },
@@ -73,7 +73,7 @@ export const deleteData = <T>(
   dataTypes: dataTypes
 ) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   try {
-    await lotusApi.delete(`/${url}`, {
+    await lotusApi.delete(`/api/blog/${url}`, {
       headers: {
         Authorization: auth + localStorage.getItem("token"),
       },
@@ -91,7 +91,7 @@ export const selectData = <T>(url: string) => async (
   dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
   try {
-    const response = await lotusApi.get(`/${url}`);
+    const response = await lotusApi.get(`/api/blog/${url}`);
     // dispatch(registering(response.data));
     // console.log("getting posts", response);
 

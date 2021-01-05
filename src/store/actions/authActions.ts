@@ -8,7 +8,7 @@ export const addUser = (user: UserAction) => async (
   dispatch: ThunkDispatch<{}, {}, AnyAction>
 ) => {
   try {
-    const response = await lotusApi.post("/signup", user);
+    const response = await lotusApi.post("/api/blog/signup", user);
     // dispatch(registering(response.data));
     localStorage.setItem("token", response.data);
     dispatch(getUserSession());
@@ -25,7 +25,7 @@ export const signIn = (user: CredentialAction) => async (
   try {
     // console.log("in signing action", user);
 
-    const response = await lotusApi.post("/login", user);
+    const response = await lotusApi.post("/api/blog/login", user);
     // console.log("in login", response, response.headers);
 
     localStorage.setItem("token", response.data);
@@ -40,7 +40,7 @@ export const signIn = (user: CredentialAction) => async (
 };
 export const getUserSession = () => async (dispatch: Dispatch) => {
   try {
-    const response = await lotusApi.get("/session", {
+    const response = await lotusApi.get("/api/blog/session", {
       headers: {
         Authorization: auth + localStorage.getItem("token"),
       },
@@ -56,7 +56,7 @@ export const getUserSession = () => async (dispatch: Dispatch) => {
 };
 export const logout = () => async (dispatch: Dispatch) => {
   try {
-    await lotusApi.get("/logout");
+    await lotusApi.get("/api/blog/logout");
     dispatch(loggingOut());
     localStorage.setItem("token", "");
   } catch (error) {

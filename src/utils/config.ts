@@ -7,7 +7,7 @@ import Paragraph from "@editorjs/paragraph";
 import Code from "@editorjs/code";
 import Marker from "@editorjs/marker";
 import Checklist from "@editorjs/checklist";
-import { server } from "../api";
+// import { server } from "../api";
 export const editorjsConfig = {
   // holder: "editorjs",
   minHeight: 150,
@@ -58,7 +58,7 @@ export const editorjsConfig = {
       inlineToolbar: true,
       config: {
         endpoints: {
-          byFile: server + "/file/upload",
+          byFile: "/blog/file/upload",
         },
         additionalRequestHeaders: {
           Authorization: "Bearer " + localStorage.getItem("token"),
