@@ -22,6 +22,6 @@ before_deploy:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: bash ./scripts/deploy.sh ./docker-compose.yml
+    script: bash ./scripts/deploy.sh
     on:
-      repo: Khaalidsub/Lotus-blog-api
+      repo: Khaalidsub/Lotus-blog-front
