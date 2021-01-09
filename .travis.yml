@@ -15,10 +15,6 @@ after_success:
   - docker build -t sleepinglotus/lotus-blogs-front .
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push sleepinglotus/lotus-blogs-front
-before_deploy:
-  - docker-compose -f docker-compose.dev.yml up -d --build
-  - docker-compose push
-  -
 deploy:
   - provider: script
     skip_cleanup: true
