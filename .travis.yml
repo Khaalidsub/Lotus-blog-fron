@@ -1,0 +1,27 @@
+sudo: required
+language: generic
+services:
+  - docker
+before_install:
+  - openssl aes-256-cbc -K $encrypted_917f31f50c0f_key -iv $encrypted_917f31f50c0f_iv -in .travis/lotus-blogs.enc -out .travis/lotus-blogs -d
+  - eval "$(ssh-agent -s)"
+  - cp .travis/lotus-blogs ~/.ssh/lotus-blogs
+  - chmod 600 ~/.ssh/lotus-blogs
+  - ssh-add ~/.ssh/lotus-blogs
+  - ssh-keyscan -H $IP >>~/.ssh/known_hosts
+  - scp ./scripts/dockerPull.sh $USER@$IP:./dockerPullFrontEnd.sh
+  - ssh -i ~/.ssh/lotus-blogs $USER@$IP "chmod 755 ./dockerPullFrontEnd.sh"
+after_success:
+  - docker build -t sleepinglotus/lotus-blogs-front .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push sleepinglotus/lotus-blogs-front
+before_deploy:
+  - docker-compose -f docker-compose.dev.yml up -d --build
+  - docker-compose push
+  -
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: bash ./scripts/deploy.sh ./docker-compose.yml
+    on:
+      repo: Khaalidsub/Lotus-blog-api

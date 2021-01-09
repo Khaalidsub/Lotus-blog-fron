@@ -33,7 +33,7 @@ export interface AddPostProps extends RouteComponentProps<{ id: string }> {
   fetchCollection: (url: string, dataTypes: dataTypes.category) => Promise<any>;
 }
 
-export interface AddPostState {}
+export interface AddPostState { }
 
 class _AddPost extends React.Component<AddPostProps, AddPostState> {
   state = {
@@ -168,6 +168,7 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
         dataTypes.post
       );
       if (response === true) {
+        this.state.editor.destroy()
         this.props.history.replace("/");
       }
     } else {
@@ -201,11 +202,11 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
                   label="Update Article"
                 />
               ) : (
-                <SubmitButton
-                  loading={this.state.loading}
-                  label="Add Article"
-                />
-              )}
+                  <SubmitButton
+                    loading={this.state.loading}
+                    label="Add Article"
+                  />
+                )}
               <LoadingAnimation loading={this.state.loading} />
             </div>
           </form>

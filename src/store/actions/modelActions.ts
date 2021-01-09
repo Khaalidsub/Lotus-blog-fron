@@ -107,7 +107,7 @@ export const toggle = (typeToggle: string, id: string) => async (
 ) => {
   try {
     const result = await lotusApi.patch(
-      `/${typeToggle}/${id}`,
+      `/api/blog/${typeToggle}/${id}`,
       {},
       {
         headers: {

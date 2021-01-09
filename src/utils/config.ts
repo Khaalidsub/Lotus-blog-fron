@@ -11,6 +11,30 @@ import Checklist from "@editorjs/checklist";
 export const editorjsConfig = {
   // holder: "editorjs",
   minHeight: 150,
+  data: {
+    blocks: [
+      {
+        type: "header",
+        data: {
+          text: "Header",
+          level: 2,
+        },
+      },
+      {
+        type: "header",
+        data: {
+          text: "Sub Heading",
+          level: 3,
+        },
+      },
+      {
+        type: "paragraph",
+        data: {
+          text: "Paragraph",
+        },
+      },
+    ],
+  },
   tools: {
     list: {
       class: List,
