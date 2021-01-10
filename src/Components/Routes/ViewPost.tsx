@@ -1,6 +1,7 @@
 import React from "react";
 import Output from "editorjs-react-renderer";
 import { style } from "../../utils/utils";
+import "../../styles/addPost.css";
 import "../../styles/viewPost.css";
 import { PostAction, CombinedReducer, UserAction } from "../../store/interface";
 import { selectData, getUserSession, toggle } from "../../store";
