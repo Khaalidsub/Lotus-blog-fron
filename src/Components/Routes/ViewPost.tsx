@@ -10,6 +10,8 @@ import { motion } from "framer-motion";
 import { containerVariants } from "../../themes/motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
+import EditorJS, { OutputData } from "@editorjs/editorjs";
+import { readOnly } from "../../utils/config";
 export interface ViewPostProps extends RouteComponentProps<{ id: string }> {
   post: PostAction;
   user: UserAction;
@@ -18,14 +20,18 @@ export interface ViewPostProps extends RouteComponentProps<{ id: string }> {
   getUserSession: () => Promise<any>;
 }
 
-export interface ViewPostState {}
+export interface ViewPostState { }
 
 export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
-  state = { loading: true, isLiked: false, isBooked: false, toggling: false };
+  state = { loading: true, isLiked: false, editor: {} as EditorJS, isBooked: false, toggling: false };
   componentDidMount() {
     // console.log("view post", this.props);
 
     this.props.selectPost(`posts/post/${this.props.match.params.id}`);
+  }
+  componentWillUnmount() {
+    this.state.editor.clear();
+    // this.state.editor.listeners.off
   }
 
   componentDidUpdate(prevProps: Readonly<ViewPostProps>) {
@@ -33,6 +39,11 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
       prevProps.post !== this.props.post ||
       prevProps.user !== this.props.user
     ) {
+      console.log('listerners', this.state.editor.listeners);
+
+      this.setState({
+        editor: new EditorJS(readOnly(this.props.post as any)),
+      });
       this.setState({ loading: false });
       if (this.props.user.id) {
         const isLiked =
@@ -102,9 +113,8 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
               />
               <div className="text-sm">
                 <Link
-                  to={`/blogs/profile/${
-                    (this.props.post.user as UserAction)?.id
-                  }`}
+                  to={`/blogs/profile/${(this.props.post.user as UserAction)?.id
+                    }`}
                 >
                   <p className="text-tertiary leading-none hover:underline">
                     {(this.props.post.user as UserAction)?.name}
@@ -119,9 +129,10 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
           </div>
 
           <div className="view  relative font-hairline bg-secondary-background rounded-lg  shadow-xl pl-6 md:pl-24 pr-6yarn md:pr-24  pt-56 pb-48">
-            {this.props.post !== undefined && this.props.post.blocks && (
+            {/* {this.props.post !== undefined && this.props.post.blocks && (
               <Output data={this.props.post} style={style} />
-            )}
+            )} */}
+            <div id="editorjs"></div>
             <BottomShareOptions
               likes={this.props.post.likes}
               isLiked={this.state.isLiked}
@@ -152,9 +163,8 @@ const TopShareOptions = (props: {
             <div>
               <FontAwesomeIcon
                 icon="thumbs-up"
-                className={`cursor-pointer mr-2   ${
-                  props.isLiked ? "text-primary" : "text-secondary"
-                }`}
+                className={`cursor-pointer mr-2   ${props.isLiked ? "text-primary" : "text-secondary"
+                  }`}
                 onClick={() => props.toogleLike()}
               />
               {props.likes}
@@ -165,9 +175,8 @@ const TopShareOptions = (props: {
           <div className="flex flex-col items-center ml-2 justify-between">
             <FontAwesomeIcon
               icon="bookmark"
-              className={`cursor-pointer   ${
-                props.isBookMarked ? "text-primary" : "text-secondary"
-              }`}
+              className={`cursor-pointer   ${props.isBookMarked ? "text-primary" : "text-secondary"
+                }`}
               onClick={() => props.toogleBookMark()}
             />
             <p className="mt-2">BookMark</p>
@@ -192,9 +201,8 @@ const BottomShareOptions = (props: {
             <div>
               <FontAwesomeIcon
                 icon="thumbs-up"
-                className={`cursor-pointer mr-2   ${
-                  props.isLiked ? "text-primary" : "text-secondary"
-                }`}
+                className={`cursor-pointer mr-2   ${props.isLiked ? "text-primary" : "text-secondary"
+                  }`}
                 onClick={() => props.toogleLike()}
               />
               {props.likes}
@@ -205,9 +213,8 @@ const BottomShareOptions = (props: {
           <div className="flex flex-col items-center ml-2 justify-between">
             <FontAwesomeIcon
               icon="bookmark"
-              className={`cursor-pointer   ${
-                props.isBookMarked ? "text-primary" : "text-secondary"
-              }`}
+              className={`cursor-pointer   ${props.isBookMarked ? "text-primary" : "text-secondary"
+                }`}
               onClick={() => props.toogleBookMark()}
             />
             <p className="mt-2">BookMark</p>

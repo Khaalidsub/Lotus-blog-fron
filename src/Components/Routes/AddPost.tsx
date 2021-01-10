@@ -37,7 +37,7 @@ export interface AddPostState { }
 
 class _AddPost extends React.Component<AddPostProps, AddPostState> {
   state = {
-    editor: {} as EditorJS,
+    editor: new EditorJS(editorjsConfig),
     error: "",
     post: {} as PostAction,
     loading: false,
@@ -45,19 +45,25 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     isReady: false,
   };
   async componentDidMount() {
-    if (!this.props.match.params.id) {
-      this.setState({
-        editor: new EditorJS(editorjsConfig),
-      });
-    } else {
+    console.log('mounting...');
+
+    if (this.props.match.params.id) {
+
+
       await this.props.selectData(`posts/post/${this.props.match.params.id}`);
+      this.state.editor.render(this.props.prevPost as OutputData)
       this.setState({
-        editor: new EditorJS({
-          ...editorjsConfig,
-          data: this.props.prevPost as OutputData,
-        }),
+
       });
     }
+  }
+  componentWillUnmount() {
+    console.log('hello I am unmounting');
+
+    // this.state.editor.destroy();
+    // this.setState({
+    //   editor: null
+    // })
   }
 
   validatedData = (result: OutputData) => {
@@ -124,6 +130,7 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
     // console.log("sending..", this.state.post);
   };
   updatePost = async (result: OutputData) => {
+    const image = result.blocks.find((block) => block.type === "image");
     this.setState({
       post: {
         ...this.props.prevPost,
@@ -134,6 +141,7 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
           .category as CategoryAction).id,
         user: this.props.user.id,
         blocks: result.blocks,
+        image: image?.data?.file?.url
       },
       isReady: true,
     });
@@ -144,6 +152,8 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
       dataTypes.post
     );
     if (response === true) {
+      this.state.editor.clear();
+      console.log('listerners', this.state.editor.listeners.off);
       this.props.history.goBack();
     }
   };
@@ -168,8 +178,9 @@ class _AddPost extends React.Component<AddPostProps, AddPostState> {
         dataTypes.post
       );
       if (response === true) {
-        this.state.editor.destroy()
-        this.props.history.replace("/");
+        this.state.editor.clear();
+        console.log('listerners', this.state.editor.listeners.off);
+        this.props.history.goBack();
       }
     } else {
       this.setState({ isReady: false });

@@ -52,7 +52,7 @@ esac
 function dockerBuild(){
     docker login
      echo "Composing your amazing images..."
-        docker-compose pull sleepinglotus/lotus-blogs-front
+        docker-compose pull client
         docker-compose up -d
 }
 
