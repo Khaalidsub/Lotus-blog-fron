@@ -5,6 +5,7 @@
   color: var(--color-secondary);
 
   text-align: center;
+  margin-top: 2em;
 }
 .view h2 {
   font-size: 2.25rem;
@@ -19,6 +20,8 @@
 
 .view p {
   color: var(--color-secondary);
+  line-height: 32px;
+  font-size: 21px;
 }
 
 .view label,
@@ -40,6 +43,10 @@
 
 .view a {
   text-decoration: underline;
+}
+
+.view img {
+  border-radius: 30px;
 }
 
 /* .view table {
