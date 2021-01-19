@@ -31,7 +31,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
     this.props.selectPost(`posts/post/${this.props.match.params.id}`);
   }
   componentWillUnmount() {
-    this.state.editor.clear();
+    // this.state.editor.clear();
     // this.state.editor.listeners.off
   }
 
@@ -40,11 +40,7 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
       prevProps.post !== this.props.post ||
       prevProps.user !== this.props.user
     ) {
-      console.log('listerners', this.state.editor.listeners);
 
-      this.setState({
-        editor: new EditorJS(readOnly(this.props.post as any)),
-      });
       this.setState({ loading: false });
       if (this.props.user.id) {
         const isLiked =
@@ -130,10 +126,10 @@ export class _ViewPost extends React.Component<ViewPostProps, ViewPostState> {
           </div>
 
           <div className="view  relative font-hairline bg-secondary-background rounded-lg  shadow-xl pl-6 md:pl-24 pr-6yarn md:pr-24  pt-56 pb-48">
-            {/* {this.props.post !== undefined && this.props.post.blocks && (
+            {this.props.post !== undefined && this.props.post.blocks && (
               <Output data={this.props.post} style={style} />
-            )} */}
-            <div id="editorjs"></div>
+            )}
+
             <BottomShareOptions
               likes={this.props.post.likes}
               isLiked={this.state.isLiked}
